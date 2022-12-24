@@ -6,6 +6,10 @@ require:
 AllCops:
   NewCops: enable
 
+Style/RedundantFetchBlock:
+  Exclude:
+  - config/puma.rb
+
 # Supports --autocorrect
 Style/StringLiterals:
   Description: Checks if uses of quotes match the configured preference.
