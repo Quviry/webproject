@@ -1,5 +1,8 @@
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
+// add some scss code
 
-$h1-font-size: 1rem; // this line was added
 @import 'bootstrap/scss/bootstrap';
+
+.top-nav__item .item--selected {
+    border-bottom: 3px solid #262636;
+    @extend .text-dark;
+}
