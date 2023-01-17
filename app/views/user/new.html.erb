@@ -1,0 +1,9 @@
+<div class="signup-card">
+    <%= turbo_frame_tag "signup" do %>
+        <h1>Register</h1>
+        <%= render "user/form", user: @user %>
+    <% end %>
+    <div>
+        Already have a account? <%= link_to "Login", "/login" %>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<% turbo_frame_tag 'login' do %>
+    <turbo-stream target="login_form" action="replace">
+        <template>
+            <%= render partitial "session/form", locals: {} %>
+        </template>
+    </turbo-stream>
+<% end %>

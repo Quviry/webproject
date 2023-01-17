@@ -1,0 +1,8 @@
+ru:
+  user:
+    login:
+      taken: "Пользователь с таким email уже существует, попробуйте другой"
+      presence: "Введите email"
+    password:
+      short: "Пароль слишком короткий"
+      presence: "Введите пароль"

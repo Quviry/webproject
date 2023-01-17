@@ -1,0 +1,9 @@
+<div class="card col-4 p-3 mx-auto my-4">
+    <%= turbo_frame_tag "login" do %>
+        <h1>Login</h1>
+        <%= render "session/form", user: @user %>
+    <% end %>
+    <div>
+    Have no account yet? <%= link_to "Register", "/signup" %>
+    </div>
+</div>
