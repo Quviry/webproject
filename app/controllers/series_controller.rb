@@ -31,7 +31,7 @@ class SeriesController < ApplicationController
   end
 
   def info
-    @series = Series.where(title: params[:title]).first
+    @series = Series.where(url: params[:title]).first
   end
 
   def new

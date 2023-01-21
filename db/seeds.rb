@@ -6,3 +6,37 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+require 'faker'
+require 'open-uri'
+
+["Action", "Comedy", "Drama", "Fantasy", "Gaming", "Horror", "Mistery", "Romance", "Science fiction",
+  "Slice of life"].each do |genre|
+   Genre.where(title: genre).first_or_create()
+end
+
+User.create([{email: "user@example.ru", password: "password", login: "user", confirmed: false},
+  {email: "confirmed_user@example.ru", password: "confirmed_password", login: "confirmed_user", confirmed: false}])
+
+File.open("./tmp/img.png", "wb") do |saved_file|
+  # the following "open" is provided by open-uri
+  URI.open(Faker::Avatar.image(slug: "file1", size: "300x300", format: "png")) do |read_file|
+    saved_file.write(read_file.read)
+  end
+end
+
+source = File.open("./tmp/img.png", "rb")
+
+Comics.where(title: "Comics 1").destroy_all
+
+
+c = Comics.new(title: "Comics 1", url: "Comics-1", description: "Description of the comics", user: User.first, genres_list: ["Action"])
+c.thumbnail.attach(io: source, filename: "file1.png")
+c.thumbnail.save
+source = File.open("./tmp/img.png", "rb")
+c.cover.attach(io: source, filename: "file2.png")
+c.cover.save
+unless c.save
+  p c.errors
+end
+

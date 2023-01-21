@@ -35,10 +35,6 @@ class Series < ApplicationRecord
   end
 
   after_validation do
-    p @thumbnail
-    if original = Series.find_by_id(self.id)
-      self.thumbnail.attach original.thumbnail.attachment.blob if self.thumbnail.attachment.id.nil?
-      self.cover.attach original.cover.attachment.blob if self.cover.attachment.id.nil?
-    end
+
   end
 end
