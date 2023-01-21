@@ -99,3 +99,5 @@ gem "bootstrap-datepicker-rails"
 gem "pagy", "~> 6.0"
 
 gem "faker", "~> 3.1"
+
+gem "rubocop-discourse", "~> 3.0"
