@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
+# Episode of Comics
 class ComicEpisode < Episode
-  validates :pages, presence: true
+  # relations
   has_many_attached :pages
+
+  # validations
+  validates :pages, presence: true
 end

@@ -6,18 +6,18 @@ require:
 AllCops:
   NewCops: enable
   Exclude:
-  - app/models/*
   - db/migrate/*
   - db/*
   - bin/*
+
 
 Style/RedundantFetchBlock:
   Exclude:
   - config/puma.rb
 
-Style/Documentation:
+Rails/I18nLocaleTexts:
   Exclude:
-  - db/migrate/*
+  - app/models/*
 
 # Supports --autocorrect
 Style/StringLiterals:

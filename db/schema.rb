@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_18_190037) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_215017) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -88,6 +88,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_190037) do
 
 # Could not dump table "series" because of following StandardError
 #   Unknown type 'attachment' for column 'thumbnail'
+
+  create_table "series_genres", id: false, force: :cascade do |t|
+    t.integer "series_id", null: false
+    t.integer "genre_id", null: false
+  end
 
   create_table "series_tables", force: :cascade do |t|
     t.datetime "created_at", null: false

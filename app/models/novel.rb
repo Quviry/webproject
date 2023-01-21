@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-# Application models highest abstraction
+# Novel, type of Series
 class Novel < Series
 end

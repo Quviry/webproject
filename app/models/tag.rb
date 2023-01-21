@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+# Tag for tagging models Series and Episodes
 class Tag < ApplicationRecord
-  has_and_belongs_to_many :series
+  has_many :series_tags, dependent: :destroy
+  has_many :series, through: :series_tags
   # title
 end

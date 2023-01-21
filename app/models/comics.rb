@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-# Application models highest abstraction
+# Comics, type of Series
 class Comics < Series
 end
