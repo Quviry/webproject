@@ -1,0 +1,13 @@
+<%= render "dashboard/sidebar" %>
+<div class="container col-8">
+    <% if active_user_artist? %>
+        <%= render "summary" %>
+        <%= render "series/index", series: @series %>
+    <% else %>
+    <h1>Create your first series</h1>
+    <div class="d-flex">
+        <a class="px-5 py-5 me-2 h3 btn btn-outline-warning bold"  href="<%= dashboard_series_new_path(type: "comics") %>"><span><strong>Comics</strong></span></a>
+        <a class="px-5 py-5 me-2 btn h3 btn-outline-warning" href="<%= dashboard_series_new_path(type: "novel") %>"><span><strong>Novel</strong></span></a>
+    </div>
+    <% end %>
+</div>

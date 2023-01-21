@@ -1,0 +1,27 @@
+<div class="d-flex flex-column flex-shrink-0 bg-dark" style="min-height: 80vh">
+    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <li class="nav-item p-3">
+            <a href="<%= dashboard_url %>" class="nav-link  link-light <%= "active" if path_group == 1 %> py-3 " aria-current="page" title="" data-bs-toggle="tooltip"
+                data-bs-placement="right" data-bs-original-title="Dashboard">
+                <img class="bi" width="24" height="24" role="img" aria-label="Orders" src="/images/menu (1).png">
+                <p><small>Dashboard</small></p>
+            </a>
+        </li>
+        <% if active_user_artist? %>
+        <li class="p-3 ">
+            <a href="<%= episodes_path(@current_user.series.first) %>" class="nav-link  link-light <%= "active" if path_group == 2 %> py-3" title="" data-bs-toggle="tooltip" data-bs-placement="right"
+                data-bs-original-title="Episodes">
+                <img class="bi" width="24" height="24" role="img" aria-label="Series" class="py-3 btn nav-link" src="/images/list.png">
+                <p><small>Episodes</small></p>
+            </a>
+        </li>
+        <li class="p-3">
+            <a href="" class="nav-link link-light <%= "active" if path_group == 3 %> py-3" title="" data-bs-toggle="tooltip" data-bs-placement="right"
+                data-bs-original-title="Orders">
+                <img class="bi" width="24" height="24" role="img" aria-label="Performance" src="/images/bar-chart.png">
+                <p><small>Performance</small></p>
+            </a>
+        </li>
+        <% end %>
+    </ul>
+</div>

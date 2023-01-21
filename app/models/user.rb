@@ -2,6 +2,8 @@
 
 # User-describing model
 class User < ApplicationRecord
+  has_many :series, dependent: :destroy
+  has_many :episodes, through: :series, dependent: :destroy
   attr_accessor :password, :confirm_password
 
   validates :email, uniqueness: { message: I18n.t("user.login.taken") },

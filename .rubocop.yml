@@ -5,6 +5,11 @@ require:
 
 AllCops:
   NewCops: enable
+  Exclude:
+  - app/models/*
+  - db/migrate/*
+  - db/*
+  - bin/*
 
 Style/RedundantFetchBlock:
   Exclude:

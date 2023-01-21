@@ -1,0 +1,25 @@
+<div class="container-fluid">
+<%= form_with url: current_page?(:action => 'comics') ? comics_path : novels_path, method: :get, data: {turbo_frame: "series-list", turbo_action: "advance", controller: "form-filter", action: "input->form-filter#submit"} do |f| %>
+    <div class="my-2">
+    <% for genre in Genre.all.pluck(:title) %>
+        <input type="radio" class="btn-check" name="genre" id="genre--<%= genre %>" autocomplete="off" value="<%= genre %>" <%= "checked" if params[:genre] == genre %>>
+        <label class="btn btn-secondary" for="genre--<%= genre %>"><%= genre %></label>
+    <% end %>
+    <input type="radio" class="btn-check" name="genre" id="genre--all" autocomplete="off" value="all" <%= "checked" if params[:genre].nil? || params[:genre] == "all" %>>
+    <label class="btn btn-secondary" for="genre--all">All</label>
+    </div>
+<% end %>
+
+<%= turbo_frame_tag "series-list" do %>
+    <ul class="d-flex justify-content-center">
+    <% for series in @series %>
+    <div class="d-flex flex-column m-3">
+        <%= link_to series_path(title: series.url)  do %>
+            <%= image_tag series.cover, height: "303px", width: "202px" %>
+        <% end %>
+        <%= series.genres.first.title %>
+    </div>
+    <% end %>
+    </ul>
+<% end %>
+</div>

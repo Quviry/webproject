@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-between">
+    <h2 class="mt-4">Series(<%= series.length %>)</h2>
+    <div class="d-flex align-items-center">
+        <select class="form-select" aria-label="Default select example">
+            <option selected value="1">All</option>
+            <option value="2">Comic</option>
+            <option value="3">Novels</option>
+        </select>
+        <div class="dropdown ms-2">
+            <button class="btn btn-secondary fake-dropdown-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                New series
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<%= dashboard_series_new_path(type: "comics") %>">Comic</a></li>
+                <li><a class="dropdown-item" href="<%= dashboard_series_new_path(type: "novel") %>">Novel</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<% series.each do |item|%>
+<div class="card p-3 flex-row my-3">
+    <%= link_to image_tag(item.cover.variant(:thumb), height: 135, width: 90), item.url %>
+    <div class="container-fluid">
+        <div class="d-flex flex-row">
+        <p class="align-self-center status status--ongoing">Ongoing</p>
+        <div class="ms-auto">
+            <a href="<%= edit_series_path(item) %>" class="btn btn-dark">Edit series</a>
+            <a href="<%= episodes_path(item) %>" class="btn btn-dark"><img src="/images/list.png" width="16"> </a>
+            <a href="<%= new_episode_path(item) %>" class="btn btn-dark"><img src="/images/plus.png" width="16"> </a>
+        </div>
+        </div>
+        <div>Type: <%= item.type %></div>
+    </div>
+</div>
+<% end %>

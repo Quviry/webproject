@@ -1,0 +1,27 @@
+<div class="container d-flex m-5">
+    <%= link_to series_info_url(@series.url) do %>
+        <%= image_tag @series.cover, height: "240px", width: "160px" %>
+    <% end%>
+    <div class="container">
+        <div class="container">
+            <% for genre in @series.genres %>
+                <%= link_to genre.title , @series.type == "Comics" ? comics_path(genre: genre.title) : novels_path(genre: genre.title), class: "btn btn-dark p-2"%>
+            <% end %>
+        </div>
+        <div class="container my-2">
+            <%= link_to @series.type, @series.type == "Comics" ? comics_path : novels_path, class: "link-dark" %>
+            <%= content_tag(:span, " ● ") %>
+            <%= content_tag(:span, 23.to_s + " views")  %>
+            <%= content_tag(:span, " ● ") %>
+            <%= content_tag(:span, 23.to_s + " subscribers")  %>
+            <%= content_tag(:span, " ● ") %>
+            <%= content_tag(:span, 23.to_s + " likes")  %>
+        </div>
+        <div class="container">
+
+        </div>
+    </div>
+    <div class="creator">
+        Author: <%= link_to @series.user.login, @series.user %>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<%= render "dashboard/sidebar" %>
+<div class="container-fluid">
+    <div class="py-2 px-3 align-content-center d-flex justify-content-start shadow-sm">
+        <h3>Edit <%= @series.type %> series</h3>
+        <%= button_to 'Destroy', destroy_series_path(@series), form: { data: { turbo_confirm: 'Are you sure?' }} , data: {confirm: 'Are you sure?', remote: true}, method: :delete %>
+    </div>
+    <div class="container col-8">
+        <%= render "series/form", series: @series, path: update_series_path(@series), method: :patch %>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<%= render "dashboard/sidebar" %>
+<div class="container-fluid col-8">
+    <div class="container-fluid">
+        <h3> <%= @series.title %> </h3>
+    </div>
+    <% for episode in @episodes %>
+        <%= render "episode", episode: episode %>
+    <% end %>
+</div>

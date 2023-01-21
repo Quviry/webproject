@@ -51,7 +51,15 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
+
+# Rails 5.2 and Rails 6
+gem "active_storage_validations"
+
+# Optional, to use :dimension validator or :aspect_ratio validator
+gem "mini_magick", ">= 4.9.5"
+# Or
+gem "ruby-vips", ">= 2.1.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -85,3 +93,9 @@ gem "postgresql", "~> 1.0"
 gem "bundler-audit", "~> 0.9.1"
 
 gem "cssbundling-rails", "~> 1.1"
+
+gem "bootstrap-datepicker-rails"
+
+gem "pagy", "~> 6.0"
+
+gem "faker", "~> 3.1"

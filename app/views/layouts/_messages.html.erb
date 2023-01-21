@@ -1,0 +1,33 @@
+<% flash.each do |name, msg| %>
+  <% if msg.is_a?(String) %>
+    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+      <button type="button" class="close" data-bs-dismiss="toast" aria-label="Close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="toast-container">
+  <% flash.each do |name, msg| %>
+    <% if msg.is_a?(String) %>
+      <div role="alert" aria-live="assertive" aria-atomic="true" class="toast alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+        <button type="button" class="close" data-bs-dismiss="toast" aria-label="Close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      </div>
+
+
+    <% end %>
+  <% end %>
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img class="rounded me-2">
+      <strong class="me-auto">note</strong>
+      <small class="text-muted">just now</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      smth
+    </div>
+  </div>
+</div>
+

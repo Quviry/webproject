@@ -1,0 +1,30 @@
+<div class="episode-viewer">
+    <div class="episode-viewer-top" >
+        <p class="title"><%= @episode.title %></p>
+        <p class="date"><%= @episode.created_at.strftime("%F") %></p>
+    </div>
+
+    <% if @episode.type == "ComicEpisode" %>
+        <% @episode.pages.each do |page| %>
+            <%= image_tag rails_storage_proxy_path(page), class: "page", width: page.metadata["width"], heigth: page.metadata["height"] %>
+        <% end %>
+    <% elsif @episode.type == "NovelEpisode" %>
+        <%= @episode.story %>
+    <% end %>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-item">
+        <%= @episode.title %>
+    </div>
+    <div class="toolbar-item">
+        <%= link_to "Like" %>
+    </div>
+    <div class="toolbar-item">
+        <%= link_to "List" %>
+        <%= link_to "Comment" %>
+        <%= link_to "Prev" %>
+        <%= link_to "Next" %>
+        <%= link_to "Full" %>
+    </div>
+</div>

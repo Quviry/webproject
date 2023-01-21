@@ -1,0 +1,65 @@
+<%= form_with(model: series, url: path, html: {method: method}, class: "dropzone", data: {controller: "new-comic"}) do |form| %>
+  <% if series.errors.any? %>
+    <div class="card m-2" style="color: red">
+      <ul>
+        <% series.errors.each do |error| %>
+          <li><%= error.message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <h3>Title</h3>
+    <%= form.text_field :title, class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter Title", data: {action: "new-comic#renamed"} %>
+    <div class="d-flex flex-direction-row justify-content-space-between"><span class="desc__counter"><span data-new-comic-target="char_counter">54</span>/100</span></div>
+  </div>
+
+  <div class="form-group">
+    <h3>URL</h3>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">https://sapat.net/series/</span>
+        <%= form.text_field :url, class: "form-control", "aria-describedby": "basic-addon3", "data-new-comic-target": "url"%>
+    </div>
+  </div>
+
+  <div class="form-group" data-controller="image-loader">
+    <h3>Thumbnail</h3>
+    <%= image_tag series.thumbnail.attached? ?  series.thumbnail : "", style: "max-height: 300px; max-width: 200px;", class:"my-2"  %>
+    <%= form.file_field :thumbnail, class: "form-control", "data-action": "change->image-loader#update" %>
+  </div>
+
+  <div class="form-group">
+    <h3>Description</h3>
+    <%= form.text_area :description, class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter Description" %>
+  </div>
+
+  <div class="form-group" data-controller="image-loader">
+    <h3>Book cover</h3>
+    <%= image_tag series.cover.attached? ? series.cover : "", style: "max-height: 300px; max-width: 200px;", class:"my-2"  %>
+    <%= form.file_field :cover, class: "form-control", "data-action": "change->image-loader#update"%>
+  </div>
+
+  <div class="form-group">
+    <h3>Genre</h3>
+
+    <% for genre in available_genres do %>
+      <%= check_box_tag(:genres_list, genre, @series.genres.pluck(:title).include?(genre) , name: @series.type.downcase + '[genres_list][]', id: "genre-#{genre}", class: "btn-check", autocomplete: "off") %>
+      <label class="btn btn-outline-primary my-2" for="genre-<%= genre %>"><%= genre %></label>
+    <% end %>
+    <%# <h5>Main genre</h5> %>
+  </div>
+
+  <div class="form-group">
+    <h3>Tags</h3>
+    <%= text_field_tag "hello", nil,  class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter tag and press enter", data: {action: "keydown->new-comic#genered"}, for: series.type.downcase  %>
+    <div id="genres-bar" class="my-2"></div>
+  </div>
+
+  <input type="hidden">
+
+  <div>
+    <%= form.submit class: "btn btn-primary my-3" %>
+  </div>
+
+<% end %>

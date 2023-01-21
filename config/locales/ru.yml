@@ -6,3 +6,6 @@ ru:
     password:
       short: "Пароль слишком короткий"
       presence: "Введите пароль"
+  session:
+    unauthorised:
+      error: "Ошибка, не авторизован!"

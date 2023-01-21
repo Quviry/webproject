@@ -1,0 +1,62 @@
+<%= form_with(model: episode, url: "#", html: {method: :post}, class: "dropzone", data: {controller: 'new-episode'}) do |form| %>
+  <% if episode.errors.any? %>
+    <div class="card m-2" style="color: red">
+      <ul>
+        <% episode.errors.each do |error| %>
+          <li><%= error.message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <h3>Title</h3>
+    <%= form.text_field :title, class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter Title", data: {action: "new-comic#renamed"} %>
+    <div class="d-flex flex-direction-row justify-content-space-between"><span class="desc__counter"><span data-new-comic-target="char_counter">0</span>/100</span></div>
+  </div>
+
+  <div class="form-group">
+    <h3>Sheduled date</h3>
+    <div class="input-group mb-3">
+        <%= form.datetime_field :schedule_date, class: "form-control", "aria-describedby": "basic-addon3", "data-provide": "datepicker", data: {"new-episode-target": "datetime"} %>
+    </div>
+  </div>
+
+    <div class="form-group">
+        <% if episode.type == "NovelEpisode" %>
+            <h3>Type your story</h3>
+            <%= form.rich_text_area :story %>
+        <% elsif episode.type == "ComicEpisode" %>
+            <h3>Load pages</h3>
+            <%= form.file_field :pages, multiple: true, direct_upload: true, class: "form-control" %>
+        <% end %>
+    </div>
+
+
+  <div class="form-group">
+    <h3>Thumbnail</h3>
+    <%= form.file_field :thumbnail, class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter Title" %>
+    <div class="d-flex flex-direction-row justify-content-space-between"><span class="desc__counter"></div>
+  </div>
+
+  <div class="form-group">
+    <h3>Mature content?</h3>
+    <div class="form-check form-switch"><%= form.check_box :nsfw, class: "form-check-input" %></div>
+  </div>
+
+  <div class="form-group">
+    <h3>Enable comments?</h3>
+    <div class="form-check form-switch"><%= form.check_box :comments_enabled, class: "form-check-input" %></div>
+  </div>
+
+  <div class="form-group">
+    <h3>Tags</h3>
+    <%= text_field_tag "hello", nil,  class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter tag and press enter", data: {action: "keydown->new-comic#genered"}  %>
+    <div id="genres-bar" class="my-2"></div>
+  </div>
+
+  <div>
+    <%= form.submit 'Create Series', class: "btn btn-primary my-3" %>
+  </div>
+
+<% end %>

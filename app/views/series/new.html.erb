@@ -1,0 +1,7 @@
+<%= render "dashboard/sidebar" %>
+<div class="container-fluid">
+    <div class="py-2 px-3 align-content-center d-flex justify-content-start shadow-sm"><h3>New <%= @series.type %> series</h3></div>
+    <div class="container col-8">
+        <%= render "series/form", series: @series, path: dashboard_series_new_path(type: @series.type.downcase), method: :post %>
+    </div>
+</div>
