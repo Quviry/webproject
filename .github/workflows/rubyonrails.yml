@@ -34,7 +34,7 @@ jobs:
       with:
         bundler-cache: true
     - name: Setup libs
-      run: sudo apt install vips
+      run: sudo apt install libvips libvips-tools libvips-dev
     # Add or replace database setup steps here
     - name: Set up database schema
       run: bin/rails db:schema:load
