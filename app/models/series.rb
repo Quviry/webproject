@@ -3,11 +3,23 @@
 # Series of episodes
 class Series < ApplicationRecord
   # relations
-  has_many :series_tags, dependent: :destroy
+  has_many :series_tags, dependent: :delete_all
   has_many :tags, through: :series_tags
-  has_many :series_genres, dependent: :destroy
+
+  has_many :series_genres, dependent: :delete_all
   has_many :genres, through: :series_genres
+
   has_many :episodes, dependent: :destroy
+
+  has_many :views, through: :episodes
+  has_many :likes, through: :episodes
+  has_many :comments, through: :episodes
+
+  has_many :subscriptions, dependent: :delete_all
+  has_many :subscribed_user, through: :subscriptions
+
+  belongs_to :main_genre, class_name: "Genre", foreign_key: "genre_id", inverse_of: :genred_series
+
   belongs_to :user
 
   # attachments

@@ -6,10 +6,18 @@ require:
 AllCops:
   NewCops: enable
   Exclude:
-  - db/migrate/*
   - db/*
   - bin/*
 
+# Db autocreates
+Metrics:
+  Exclude:
+  - db/migrate/*
+
+Style/Documentation:
+  Exclude:
+  - db/migrate/*
+# -
 
 Style/RedundantFetchBlock:
   Exclude:

@@ -18,18 +18,60 @@
     </div>
 </div>
 <% series.each do |item|%>
-<div class="card p-3 flex-row my-3">
-    <%= link_to image_tag(item.cover.variant(:thumb), height: 135, width: 90), item.url %>
-    <div class="container-fluid">
-        <div class="d-flex flex-row">
-        <p class="align-self-center status status--ongoing">Ongoing</p>
-        <div class="ms-auto">
-            <a href="<%= edit_series_path(item) %>" class="btn btn-dark">Edit series</a>
-            <a href="<%= episodes_path(item) %>" class="btn btn-dark"><img src="/images/list.png" width="16"> </a>
-            <a href="<%= new_episode_path(item) %>" class="btn btn-dark"><img src="/images/plus.png" width="16"> </a>
+    <div class="card p-3 flex-row my-3">
+        <%= link_to image_tag(item.cover.variant(:thumb), height: 135, width: 90), series_path(item.url) %>
+        <div class="container-fluid">
+            <div class="d-flex flex-row">
+                <p class="align-self-center status status--ongoing">Ongoing</p>
+                <div class="ms-auto">
+                    <a href="<%= edit_series_path(item) %>" class="btn btn-dark">Edit series</a>
+                    <a href="<%= episodes_path(item) %>" class="btn btn-dark"><img src="/images/list.png" width="16"> </a>
+                    <a href="<%= new_episode_path(item) %>" class="btn btn-dark"><img src="/images/plus.png" width="16"> </a>
+                </div>
+            </div>
+            <h3><%= item.title %></h3>
+            <div class="container">
+                <div class="row justify-content-md-start">
+                    <div class="col">
+                        <p>Episodes: </p>
+                    </div>
+                    <div class="col">
+                        <%= item.episodes.count %>
+                    </div>
+                    <div class="col">
+                        <p>Type: </p>
+                    </div>
+                    <div class="col">
+                        <%= item.type %>
+                    </div>
+                    <div class="col">
+                        <p>Updated: </p>
+                    </div>
+                    <div class="col">
+                        <%= item.updated_at.strftime("%d/%m/%Y") %>
+                    </div>
+                </div>
+                <div class="row justify-content-md-start">
+                    <div class="col">
+                        <p>Views: </p>
+                    </div>
+                    <div class="col">
+                        <%= item.episodes.count %>
+                    </div>
+                    <div class="col">
+                        <p>Likes: </p>
+                    </div>
+                    <div class="col">
+                        <%= item.likes.count %>
+                    </div>
+                    <div class="col">
+                        <p>Subscribers: </p>
+                    </div>
+                    <div class="col">
+                        <%= item.subscriptions.count %>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-        <div>Type: <%= item.type %></div>
     </div>
-</div>
 <% end %>

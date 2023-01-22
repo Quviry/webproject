@@ -75,14 +75,14 @@ class SeriesController < ApplicationController
   private
 
   def novel_params
-    n_params = params.require(:novel).permit(:thumbnail, :cover, :title, :url, :description, :type,
+    n_params = params.require(:novel).permit(:thumbnail, :cover, :title, :url, :description, :type, :genre_id,
                                              { genres_list: %w[], tags_list: %w[] })
     n_params[:user_id] = @current_user.id
     n_params
   end
 
   def comics_params
-    c_params = params.require(:comics).permit(:thumbnail, :cover, :title, :url, :description, :type,
+    c_params = params.require(:comics).permit(:thumbnail, :cover, :title, :url, :description, :type, :genre_id,
                                               { genres_list: %w[], tags_list: %w[] })
     c_params[:user_id] = @current_user.id
     c_params

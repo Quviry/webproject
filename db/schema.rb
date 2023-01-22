@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_215017) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_225058) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,6 +49,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_215017) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "episode_id", null: false
+    t.integer "comment_id"
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_comments_on_comment_id"
+    t.index ["episode_id"], name: "index_comments_on_episode_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "episodes", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "schedule_date"
@@ -57,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_215017) do
     t.boolean "comments_enabled", default: true, null: false
     t.integer "series_id", null: false
     t.string "type", null: false
+    t.integer "scene", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["series_id"], name: "index_episodes_on_series_id"
@@ -70,9 +83,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_215017) do
     t.index ["title"], name: "index_genres_on_title", unique: true
   end
 
-  create_table "genres_series", id: false, force: :cascade do |t|
-    t.integer "series_id", null: false
-    t.integer "genre_id", null: false
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "episode_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "\"user\", \"episode\"", name: "index_likes_on_user_and_episode", unique: true
+    t.index ["episode_id"], name: "index_likes_on_episode_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -86,17 +104,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_215017) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
-# Could not dump table "series" because of following StandardError
-#   Unknown type 'attachment' for column 'thumbnail'
+  create_table "series", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "title", default: "", null: false
+    t.string "url", default: "", null: false
+    t.text "description"
+    t.integer "genre_id", null: false
+    t.integer "user_id", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_series_on_genre_id"
+    t.index ["title"], name: "index_series_on_title", unique: true
+    t.index ["url"], name: "index_series_on_url", unique: true
+    t.index ["user_id"], name: "index_series_on_user_id"
+  end
 
   create_table "series_genres", id: false, force: :cascade do |t|
     t.integer "series_id", null: false
     t.integer "genre_id", null: false
-  end
-
-  create_table "series_tables", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["series_id", "genre_id"], name: "index_series_genres_on_series_id_and_genre_id", unique: true
   end
 
   create_table "series_tags", id: false, force: :cascade do |t|
@@ -114,6 +142,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_215017) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "series_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "\"user\", \"series\"", name: "index_subscriptions_on_user_and_series", unique: true
+    t.index ["series_id"], name: "index_subscriptions_on_series_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -129,6 +167,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_215017) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["login"], name: "index_users_on_login", unique: true
+  end
+
+  create_table "views", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "episode_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "\"user\", \"episode\"", name: "index_views_on_user_and_episode", unique: true
+    t.index ["episode_id"], name: "index_views_on_episode_id"
+    t.index ["user_id"], name: "index_views_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

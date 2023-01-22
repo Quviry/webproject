@@ -9,17 +9,22 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <h3>Title</h3>
-    <%= form.text_field :title, class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter Title", data: {action: "new-comic#renamed"} %>
-    <div class="d-flex flex-direction-row justify-content-space-between"><span class="desc__counter"><span data-new-comic-target="char_counter">54</span>/100</span></div>
-  </div>
+  <%=  content_tag :div, class: "form-group", data: {controller: "char-counter", "char-counter-limit-value": 100 } do %>
+    <%= content_tag :h3, "Title" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Enter Title", data: {action: "char-counter#update" } %>
+    <%= content_tag :div, class: "d-flex flex-direction-row justify-content-end" do %>
+      <%= tag.span class: "desc__counter" do %>
+        <%= tag.span "0", "data-char-counter-target": "counter" %>
+        <%= tag.span "/0", "data-char-counter-target": "total"  %>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <div class="form-group">
     <h3>URL</h3>
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon3">https://sapat.net/series/</span>
-        <%= form.text_field :url, class: "form-control", "aria-describedby": "basic-addon3", "data-new-comic-target": "url"%>
+        <span class="input-group-text">https://sapat.net/series/</span>
+        <%= form.text_field :url, class: "form-control", "data-new-comic-target": "url"%>
     </div>
   </div>
 
@@ -40,23 +45,47 @@
     <%= form.file_field :cover, class: "form-control", "data-action": "change->image-loader#update"%>
   </div>
 
-  <div class="form-group">
+  <%= tag.div class:"form-group", data: {controller: "genres"} do %>
     <h3>Genre</h3>
 
     <% for genre in available_genres do %>
-      <%= check_box_tag(:genres_list, genre, @series.genres.pluck(:title).include?(genre) , name: @series.type.downcase + '[genres_list][]', id: "genre-#{genre}", class: "btn-check", autocomplete: "off") %>
-      <label class="btn btn-outline-primary my-2" for="genre-<%= genre %>"><%= genre %></label>
+      <%= check_box_tag :genres_list, genre.title, @series.genres.include?(genre) , name: @series.type.downcase + '[genres_list][]', id: "genre-#{genre.id}", class: "btn-check", autocomplete: "off", "data-genres-target": "tag", "data-action": "genres#update", "genre_id": genre.id %>
+      <label class="btn btn-outline-primary my-2" for="genre-<%= genre.id %>"><%= genre.title %></label>
     <% end %>
-    <%# <h5>Main genre</h5> %>
-  </div>
 
-  <div class="form-group">
+    <h5>Main genre</h5>
+    <div class="col-4">
+      <div class="input-group mb-3">
+        <%= tag.select class: "form-select", "data-genres-target": "selector", name: @series.type.downcase + "[genre_id]" do %>
+          <% if series.main_genre.nil? %>
+            <%= tag.option "None", value: "-1", selected: true %>
+          <% else %>
+            <% series.genres.each do |genre| %>
+              <%= tag.option genre.title, value: genre.id, selected: series.main_genre == genre %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= tag.div class:"form-group" , data: {controller: "char-counter tags", "char-counter-limit-value": 50 } do %>
     <h3>Tags</h3>
-    <%= text_field_tag "hello", nil,  class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter tag and press enter", data: {action: "keydown->new-comic#genered"}, for: series.type.downcase  %>
-    <div id="genres-bar" class="my-2"></div>
-  </div>
+    <%= text_field_tag "hello", nil,  class: "form-control",  placeholder: "Enter tag and press enter", data: {action: "keydown->tags#update char-counter#update" }, for: @series.type.downcase  %>
+    <%= content_tag :div, class: "d-flex flex-direction-row justify-content-end" do %>
+      <%= tag.span class: "desc__counter" do %>
+        <%= tag.span "0", "data-char-counter-target": "counter" %>
+        <%= tag.span "/0", "data-char-counter-target": "total"  %>
+      <% end %>
+    <% end %>
 
-  <input type="hidden">
+    <div id="tags-bar" class="my-2">
+      <% series.tags.each do |series_tag| %>
+        <%= tag.input type: "checkbox", name: (@series.type.downcase + "[tags_list][]"), value: series_tag.title, checked: true, id: "tag-#{series_tag.id}", class: "btn-check", autocomplete: false, "data-action": "tags#remove" %>
+        <%= tag.label series_tag.title, class: "btn btn-outline-primary m-1", for: "tag-#{series_tag.id}" %>
+      <% end %>
+    </div>
+  <% end %>
 
   <div>
     <%= form.submit class: "btn btn-primary my-3" %>

@@ -4,8 +4,14 @@
 
 import { application } from "./application"
 
+import CharCounterController from "./char_counter_controller"
+application.register("char-counter", CharCounterController)
+
 import FormFilterController from "./form_filter_controller"
 application.register("form-filter", FormFilterController)
+
+import GenresController from "./genres_controller"
+application.register("genres", GenresController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
@@ -13,8 +19,14 @@ application.register("hello", HelloController)
 import ImageLoaderController from "./image_loader_controller"
 application.register("image-loader", ImageLoaderController)
 
+import MainGenreController from "./main_genre_controller"
+application.register("main-genre", MainGenreController)
+
 import NewComicController from "./new_comic_controller"
 application.register("new-comic", NewComicController)
 
 import NewEpisodeController from "./new_episode_controller"
 application.register("new-episode", NewEpisodeController)
+
+import TagsController from "./tags_controller"
+application.register("tags", TagsController)
