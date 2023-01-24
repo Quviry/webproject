@@ -11,12 +11,12 @@ class Series < ApplicationRecord
 
   has_many :episodes, dependent: :destroy
 
-  has_many :views, through: :episodes
-  has_many :likes, through: :episodes
-  has_many :comments, through: :episodes
+  has_many :views, through: :episodes, counter_cache: true
+  has_many :likes, through: :episodes, counter_cache: true
+  has_many :comments, through: :episodes, counter_cache: true
 
   has_many :subscriptions, dependent: :delete_all
-  has_many :subscribed_user, through: :subscriptions
+  has_many :subscribed_user, through: :subscriptions, source: :series
 
   belongs_to :main_genre, class_name: "Genre", foreign_key: "genre_id", inverse_of: :genred_series
 
@@ -51,6 +51,6 @@ class Series < ApplicationRecord
 
   before_validation do
     self.tags = (tags_list || []).map { |title| Tag.where(title:).first_or_create }
-    self.genres = (genres_list || []).map { |title| Genre.where(title:).first }
+    self.genres = Genre.where(title: (genres_list || []))
   end
 end

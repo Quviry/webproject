@@ -1,19 +1,17 @@
-<div class="card p-3 flex-row my-3" >
-    <%= episode.title %>
-    <% if episode.thumbnail.attached? %>
-        <%= link_to "/"  do %>
-            <%= image_tag rails_storage_proxy_path(episode.thumbnail) %>
+<div class="card p-3 flex-row my-3 align-items-center " >
+    <div class="col-1">
+        <%= episode.scene %>
+    </div>
+    <div class="col-4">
+        <%= link_to episode_path(episode), class: "text-decoration-none" do %>
+            <%= image_tag episode.thumbnail, height: 50, width: 50  if episode.thumbnail.attached? %>
         <% end %>
-    <% end %>
-    <div class="container-fluid">
-        <div class="d-flex flex-row">
-        <p class="align-self-center status status--ongoing">Ongoing</p>
-        <div class="ms-auto">
-            <a class="btn btn-dark">Edit series</a>
-            <a href="" class="btn btn-dark"><img src="/images/list.png" width="16"> </a>
-            <a href="<%= new_episode_path(episode) %>" class="btn btn-dark"><img src="/images/plus.png" width="16"> </a>
-        </div>
-        </div>
-        <div>Type: <%= episode.type %></div>
+        <%= episode.title %>
+    </div>
+    <div class="col-4">
+        Published <!-- TODO: add status -->
+    </div>
+    <div class="col-3">
+        <%= link_to "Edit", edit_episode_path(episode), class: "btn btn-success" %>
     </div>
 </div>

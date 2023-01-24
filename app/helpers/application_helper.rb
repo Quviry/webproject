@@ -13,7 +13,16 @@ module ApplicationHelper
     if child == "index"
       current_page?(controller: "home") ? "item--selected" : "text-dark"
     elsif %w[comics novels].include?(child)
-      current_page?(controller: "series", action: child) ? "item--selected" : "text-dark"
+      in_series_controller(child) || in_episode_controller(child) ? "item--selected" : "text-dark"
     end
+  end
+
+  def in_series_controller(child)
+    current_page?(controller: "series", action: child)
+  end
+
+  def in_episode_controller(child)
+    controller_name == "episode" && action_name == "show" &&
+      instance_variable_get(:@series).type.downcase.pluralize == child
   end
 end

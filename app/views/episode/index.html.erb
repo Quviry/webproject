@@ -1,7 +1,31 @@
 <%= render "dashboard/sidebar" %>
+
 <div class="container-fluid col-8">
     <div class="container-fluid">
-        <h3> <%= @series.title %> </h3>
+        <div class="dropdown">
+            <button class="btn-lg m-2 btn h3 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= @series.title %>
+            </button>
+            <ul class="dropdown-menu">
+                <% @current_user.series.each do |series| %>
+                    <li><a class="dropdown-item" href="<%= episodes_path(series) %>"><%= series.title %></a></li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+    <div class="card p-3 flex-row my-3 align-items-center bg-secondary">
+        <div class="col-1">
+            Episode#
+        </div>
+        <div class="col-4">
+            Thumbnail/Episode info
+        </div>
+        <div class="col-4">
+            Status
+        </div>
+        <div class="col-3">
+            Actions
+        </div>
     </div>
     <% for episode in @episodes %>
         <%= render "episode", episode: episode %>

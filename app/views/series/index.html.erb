@@ -17,7 +17,10 @@
         <%= link_to series_path(title: series.url)  do %>
             <%= image_tag series.cover, height: "303px", width: "202px" %>
         <% end %>
-        <%= series.genres.first.title %>
+        <div class="d-flex justify-content-between">
+            <span><%= series.main_genre.title %></span>
+            <span><%= series.likes.count %> ❤</span>
+        </div>
     </div>
     <% end %>
     </ul>

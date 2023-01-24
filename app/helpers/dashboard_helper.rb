@@ -16,4 +16,16 @@ module DashboardHelper
       1
     end
   end
+
+  def received_likes(user)
+    user.collected_likes.count
+  end
+
+  def received_views(user)
+    user.collected_views.count
+  end
+
+  def received_comments(user)
+    user.collected_comments.count
+  end
 end

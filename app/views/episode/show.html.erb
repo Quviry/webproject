@@ -1,30 +1,33 @@
-<div class="episode-viewer">
-    <div class="episode-viewer-top" >
-        <p class="title"><%= @episode.title %></p>
-        <p class="date"><%= @episode.created_at.strftime("%F") %></p>
+<div class="episode-viewer" id="episode-viewer" data-controller="viewer">
+    <%= turbo_frame_tag "pagination-prev", src: episode_path(@prev_episode, format: :turbo_stream, page: "prev"), loading: :lazy unless @prev_episode.nil? %>
+    <div id="episodes" class="container"></div>
+    <%= turbo_frame_tag "pagination", src: episode_path(@episode, format: :turbo_stream), loading: :lazy %>
+
+    <div id="viewer-sidebar">
+        <div> <%= link_to "Some Page", series_info_path(@episode.series.url) %> </div>
     </div>
 
-    <% if @episode.type == "ComicEpisode" %>
-        <% @episode.pages.each do |page| %>
-            <%= image_tag rails_storage_proxy_path(page), class: "page", width: page.metadata["width"], heigth: page.metadata["height"] %>
-        <% end %>
-    <% elsif @episode.type == "NovelEpisode" %>
-        <%= @episode.story %>
-    <% end %>
+    <div class="toolbar" data-viewer-target="toolbar">
+        <div class="toolbar-item" id="toolbar-item-description">
+            <div id="toolbar-item-description__item">
+                <%= @episode.title %>
+            </div>
+        </div>
+        <div class="toolbar-item">
+            <%= turbo_frame_tag "likes_turbo_frame", src: like_episode_path(@episode, format: :turbo_stream) do %>
+                <div id="like">
+                    <%= loader %>
+                </div>
+            <% end %>
+        </div>
+
+        <div class="toolbar-item">
+            <%= link_to "List" %>
+            <%= link_to "Comment" %>
+            <%= link_to "Prev" %>
+            <%= link_to "Next" %>
+            <%= tag.button "Full", id: "toolbar-item_fullscreen", data: {action: "viewer#toggleFullScreen"} %>
+        </div>
+    </div>
 </div>
 
-<div class="toolbar">
-    <div class="toolbar-item">
-        <%= @episode.title %>
-    </div>
-    <div class="toolbar-item">
-        <%= link_to "Like" %>
-    </div>
-    <div class="toolbar-item">
-        <%= link_to "List" %>
-        <%= link_to "Comment" %>
-        <%= link_to "Prev" %>
-        <%= link_to "Next" %>
-        <%= link_to "Full" %>
-    </div>
-</div>

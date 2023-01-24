@@ -1,12 +1,57 @@
-<div class=" card align-items-center justify-content-center p-3 m-auto">
-        <h1>Home#index</h1>
-        <button type="button"
-                class="btn btn-lg btn-danger"
-                data-bs-toggle="popover"
-                title="Popover title"
-                data-bs-content="Amazing content, right ?">
-                Click to toggle popover
-        </button>
+<div class="container-fluid m-2">
+    <h3>Popular</h3>
+    <div class="align-items-center justify-content-center p-3 m-auto">
+        <ul class="d-flex justify-content-center">
+            <% for series in @popular %>
+            <div class="d-flex flex-column m-3">
+                <%= link_to series_path(title: series.url)  do %>
+                    <%= image_tag series.cover, height: "303px", width: "202px" %>
+                <% end %>
+                <div class="d-flex justify-content-between">
+                    <span><%= series.main_genre.title %></span>
+                    <span><%= series.likes.count %> ❤</span>
+                </div>
+            </div>
+            <% end %>
+        </ul>
+    </div>
+    <% unless @subscribed_new.nil? || @subscribed_new.empty? %>
+        <h3>New in subscriptions</h3>
+        <div class="align-items-center justify-content-center p-3 m-auto">
+            <ul class="d-flex justify-content-center">
+                <% for series in @subscribed_new %>
+                <div class="d-flex flex-column m-3">
+                    <%= link_to series_path(title: series.url)  do %>
+                        <%= image_tag series.cover, height: "303px", width: "202px" %>
+                    <% end %>
+                    <div class="d-flex justify-content-between">
+                        <span><%= series.main_genre.title %></span>
+                        <span><%= series.likes.count %> ❤</span>
+                    </div>
+                </div>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <% unless @subscribed.nil? || @subscribed.empty? %>
+        <h3>Subscriptions</h3>
+        <div class="align-items-center justify-content-center p-3 m-auto">
+            <ul class="d-flex justify-content-center">
+                <% for series in @subscribed %>
+                <div class="d-flex flex-column m-3">
+                    <%= link_to series_path(title: series.url)  do %>
+                        <%= image_tag series.cover, height: "303px", width: "202px" %>
+                    <% end %>
+                    <div class="d-flex justify-content-between">
+                        <span><%= series.main_genre.title %></span>
+                        <span><%= series.likes.count %> ❤</span>
+                    </div>
+                </div>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
 </div>
 
 

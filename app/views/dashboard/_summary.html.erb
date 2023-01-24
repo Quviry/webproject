@@ -2,15 +2,15 @@
 
 <ul class="d-flex justify-content-around text-center  ">
     <li class="card p-4" style="width: 25%">
-        <h3>0</h3>
+        <h3><%= received_views(@current_user) %></h3>
         <p>Total views</p>
     </li>
     <li class="card p-4" style="width: 25%">
-        <h3>0</h3>
+        <h3><%= received_likes(@current_user) %></h3>
         <p>Total likes</p>
     </li>
     <li class="card p-4" style="width: 25%">
-        <h3>0</h3>
+        <h3><%= received_comments(@current_user) %></h3>
         <p>Total comments</p>
     </li>
 </ul>

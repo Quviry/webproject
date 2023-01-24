@@ -88,8 +88,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_225058) do
     t.integer "episode_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "\"user\", \"episode\"", name: "index_likes_on_user_and_episode", unique: true
     t.index ["episode_id"], name: "index_likes_on_episode_id"
+    t.index ["user_id", "episode_id"], name: "index_likes_on_user_id_and_episode_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
@@ -147,8 +147,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_225058) do
     t.integer "series_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "\"user\", \"series\"", name: "index_subscriptions_on_user_and_series", unique: true
     t.index ["series_id"], name: "index_subscriptions_on_series_id"
+    t.index ["user_id", "series_id"], name: "index_subscriptions_on_user_id_and_series_id", unique: true
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -175,7 +175,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_225058) do
     t.integer "episode_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "\"user\", \"episode\"", name: "index_views_on_user_and_episode", unique: true
     t.index ["episode_id"], name: "index_views_on_episode_id"
     t.index ["user_id"], name: "index_views_on_user_id"
   end

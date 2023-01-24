@@ -5,18 +5,22 @@ class User < ApplicationRecord
   # relations
   has_many :series, dependent: :destroy
   has_many :episodes, through: :series, dependent: :destroy
+  has_many :collected_likes, through: :episodes, source: :likes
+  has_many :collected_views, through: :episodes, source: :views
+  has_many :collected_comments, through: :episodes, source: :comments
 
   has_many :subscriptions, dependent: :destroy
-  has_many :subscript_series, through: :subscriptions # maybe fall
+  has_many :subscript_series, through: :subscriptions, source: :series # maybe fall
+  has_many :subscript_episodes, through: :subscript_series, source: :episodes
 
   has_many :views, dependent: :nullify
-  has_many :viewed_episodes, through: :views # TODO: fix relation
+  has_many :viewed_episodes, through: :views, source: :episode
 
   has_many :likes, dependent: :nullify
-  has_many :liked_episodes, through: :likes
+  has_many :liked_episodes, through: :likes, source: :episode
 
   has_many :comments, dependent: :destroy
-  has_many :commented_episodes, through: :comments
+  has_many :commented_episodes, through: :comments, source: :episode
 
   # extra attributes
   attr_accessor :password, :confirm_password

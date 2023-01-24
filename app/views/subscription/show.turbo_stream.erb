@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "subscribe" do %>
+    <div id="subscribe">
+        <%= button_to 'Subscribe', subscribe_series_path(@series_id), data: {remote: true}, method: (@subscribed ? :delete : :post ), class: "btn " + (@subscribed ? "btn-warning" : "btn-outline-warning" ) %>
+    </div>
+<% end %>

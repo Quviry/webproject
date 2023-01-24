@@ -7,23 +7,23 @@
     @extend .text-dark;
 }
 
-.signup-card{
+.signup-card {
     max-width: 25%;
     margin: auto;
 }
 
-.footer{
+.footer {
     bottom: 0;
     width: 100%;
     height: 60px;
     line-height: 60px;
 }
 
-body{
+body {
     min-height: 100vh;
 }
 
-.dropzone .form-group{
+.dropzone .form-group {
     @extend .my-4;
 }
 
@@ -41,32 +41,33 @@ main {
     background-color: #56c67620;
 }
 
-.fake-dropdown-button{
+.fake-dropdown-button {
     width: max-content;
 }
 
-.fake-dropdown-button.show{
+.fake-dropdown-button.show {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
-.dropdown-menu{
+
+.dropdown-menu {
     min-width: min-content;
     width: 100%;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
 }
 
-.status{
+.status {
     border-radius: 4px;
     font-size: 12px;
     padding: 4px 10px;
 }
 
-.form-check-input{
+.form-check-input {
     transform: scale(1.5);
 }
 
-.toolbar{
+.toolbar {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -75,45 +76,81 @@ main {
     justify-content: space-between;
     padding: 15px;
     color: aliceblue;
+    z-index: 9;
 }
 
-.episode-show > .footer{
+.episode {
+    text-align: center;
+
+    .trix-content {
+        text-align: initial;
+    }
+}
+
+.episode-show {
+    .footer {
+        display: none;
+    }
+    header {
+        position: fixed;
+        background: inherit;
+        width: 100%;
+        z-index: 5;
+    }
+}
+
+*:fullscreen .episode-show header{
     display: none;
 }
 
-.episode-viewer{
+.episode-viewer {
     display: flex;
     flex-direction: column;
     width: 900px;
-    align-items: center;
 }
 
-.episode-viewer-top{
+.episode-viewer-top {
     display: flex;
     align-self: normal;
     justify-content: space-between;
+    align-items: flex-end;
     padding: 10px;
-    .title{
+
+    .title {
         font-size: 24px;
         font-weight: bold;
     }
-    .date{
+
+    .date {
         opacity: 0.8;
     }
 }
 
-.episode-viewer > .page{
+.episode-viewer .page {
     max-width: 900px;
+    height: auto;
 }
 
-#turbo-confirm{
+#viewer-sidebar{
+    position: fixed;
+    height: 100%;
+    width: 300px;
+    right: 0;
+    background-color: rgb(235, 235, 235);
+    top: 54px;
+    z-index: 3;
+}
+
+#turbo-confirm {
     border-radius: 5px;
     border-width: 1px;
     text-align: center;
-    &::backdrop{
-        background-color: rgba(0,0,0,0.5);
+
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
     }
-    button{
+
+    button {
         @extend .btn;
         @extend .btn-dark;
     }

@@ -8,6 +8,5 @@ class CreateViews < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-    add_index :views, %i[user episode], unique: true
   end
 end

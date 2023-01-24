@@ -9,11 +9,16 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <h3>Title</h3>
-    <%= form.text_field :title, class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter Title", data: {action: "new-comic#renamed"} %>
-    <div class="d-flex flex-direction-row justify-content-space-between"><span class="desc__counter"><span data-new-comic-target="char_counter">0</span>/100</span></div>
-  </div>
+  <%= content_tag :div, class: "form-group", data: {controller: "char-counter", "char-counter-limit-value": 100 } do %>
+    <%= content_tag :h3, "Title" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Enter Title", data: {action: "char-counter#update" } %>
+    <%= content_tag :div, class: "d-flex flex-direction-row justify-content-end" do %>
+      <%= tag.span class: "desc__counter" do %>
+        <%= tag.span "0", "data-char-counter-target": "counter" %>
+        <%= tag.span "/0", "data-char-counter-target": "total"  %>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <div class="form-group">
     <h3>Sheduled date</h3>
@@ -33,10 +38,10 @@
     </div>
 
 
-  <div class="form-group">
+  <div class="form-group" data-controller="image-loader">
     <h3>Thumbnail</h3>
-    <%= form.file_field :thumbnail, class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter Title" %>
-    <div class="d-flex flex-direction-row justify-content-space-between"><span class="desc__counter"></div>
+    <%= image_tag episode.thumbnail.attached? ?  episode.thumbnail : "", style: "max-height: 300px; max-width: 200px;", class:"my-2"  %>
+    <%= form.file_field :thumbnail, class: "form-control", "data-action": "change->image-loader#update" %>
   </div>
 
   <div class="form-group">
@@ -49,14 +54,8 @@
     <div class="form-check form-switch"><%= form.check_box :comments_enabled, class: "form-check-input" %></div>
   </div>
 
-  <div class="form-group">
-    <h3>Tags</h3>
-    <%= text_field_tag "hello", nil,  class: "form-control", aria_describedby: "emailHelp", placeholder: "Enter tag and press enter", data: {action: "keydown->new-comic#genered"}  %>
-    <div id="genres-bar" class="my-2"></div>
-  </div>
-
   <div>
-    <%= form.submit 'Create Series', class: "btn btn-primary my-3" %>
+    <%= form.submit class: "btn btn-primary my-3" %>
   </div>
 
 <% end %>

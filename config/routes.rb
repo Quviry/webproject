@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   root "home#index"
   get "home/index"
@@ -26,10 +27,25 @@ Rails.application.routes.draw do
   patch "/dashboard/series/:id", to: "series#update", as: "update_series"
   delete "/dashboard/series/:id", to: "series#destroy", as: "destroy_series"
 
+  get "/dashboard/episodes/list", to: "dashboard#episodes", as: "dashboard_episodes"
+  get "/dashboard/series/:series_id/episode/list", to: "episode#index", as: "episodes"
+
   get "/dashboard/series/:series_id/episode/create", to: "episode#new", as: "new_episode"
   post "/dashboard/series/:series_id/episode/create", to: "episode#create"
 
-  get "/dashboard/series/:series_id/episode/list", to: "episode#index", as: "episodes"
+  get "dashboard/episode/:id/edit", to: "episode#edit", as: "edit_episode"
+  post "dashboard/episode/:id/edit", to: "episode#update"
+  delete "dashboard/episode/:id", to: "episode#destroy", as: "destroy_episode"
 
   get "/user/:id", to: "user#show", as: "user"
+
+  get "/like/:id", to: "like#show", as: "like_episode"
+  post "/like/:id", to: "like#create"
+  delete "/like/:id", to: "like#destroy"
+
+  get "/subscription/:id", to: "subscription#show", as: "subscribe_series"
+  post "/subscription/:id", to: "subscription#create"
+  delete "/subscription/:id", to: "subscription#destroy"
 end
+
+# rubocop:enable Metrics/BlockLength

@@ -6,4 +6,8 @@ class DashboardController < ApplicationController
   def index
     @series = Series.where(user: @current_user)
   end
+
+  def episodes
+    redirect_to episodes_path(@current_user.series.first)
+  end
 end

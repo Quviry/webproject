@@ -8,6 +8,6 @@ class CreateSubscriptions < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-    add_index :subscriptions, %i[user series], unique: true
+    add_index :subscriptions, %i[user_id series_id], unique: true
   end
 end

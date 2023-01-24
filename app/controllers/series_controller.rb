@@ -6,7 +6,7 @@ class SeriesController < ApplicationController
   def index; end
 
   def comics
-    @series = if params[:genre] == "all"
+    @series = if params[:genre] == "all" || params[:genre].nil?
                 Comics.all
               else
                 Comics.joins(:genres).where(genres: { title: params[:genre] })
@@ -15,7 +15,7 @@ class SeriesController < ApplicationController
   end
 
   def novels
-    @series = if params[:genre] == "all"
+    @series = if params[:genre] == "all" || params[:genre].nil?
                 Novel.all
               else
                 Novel.joins(:genres).where(genres: { title: params[:genre] })

@@ -1,2 +1,8 @@
-<h1>Episode#edit</h1>
-<p>Find me in app/views/episode/edit.html.erb</p>
+<%= render "dashboard/sidebar" %>
+<div class="container-fluid col-8">
+    <div class="py-2 px-3 align-content-center d-flex justify-content-between shadow-sm">
+        <h3> Edit <%= @episode.type.underscore.humanize %> </h3>
+        <%= button_to 'Destroy', destroy_episode_path(@episode), form: { data: { turbo_confirm: 'Are you sure?' }} , data: {remote: true}, method: :delete, class: "btn btn-warning" %>
+    </div>
+    <%= render "form", episode: @episode %>
+</div>

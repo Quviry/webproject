@@ -9,3 +9,15 @@ ru:
   session:
     unauthorised:
       error: "Ошибка, не авторизован!"
+  activerecord:
+    models:
+      user: Пользователь
+      series: Серия
+      comic_episode: Эпизод комикса
+      novel_episode: Эпизод романа
+    actions:
+      update: Обновить
+  helpers:
+    submit:
+      create: Создать %{model}
+      update: Обновить %{model}

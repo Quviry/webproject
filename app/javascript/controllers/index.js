@@ -30,3 +30,6 @@ application.register("new-episode", NewEpisodeController)
 
 import TagsController from "./tags_controller"
 application.register("tags", TagsController)
+
+import ViewerController from "./viewer_controller"
+application.register("viewer", ViewerController)

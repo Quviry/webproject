@@ -9,7 +9,7 @@
         </li>
         <% if active_user_artist? %>
         <li class="p-3 ">
-            <a href="<%= episodes_path(@current_user.series.first) %>" class="nav-link  link-light <%= "active" if path_group == 2 %> py-3" title="" data-bs-toggle="tooltip" data-bs-placement="right"
+            <a href="<%= dashboard_episodes_path %>" class="nav-link  link-light <%= "active" if path_group == 2 %> py-3" title="" data-bs-toggle="tooltip" data-bs-placement="right"
                 data-bs-original-title="Episodes">
                 <img class="bi" width="24" height="24" role="img" aria-label="Series" class="py-3 btn nav-link" src="/images/list.png">
                 <p><small>Episodes</small></p>

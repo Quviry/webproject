@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "like" do %>
+    <div id="like">
+        <%= button_to 'Like', like_episode_path(@episode_id), data: {remote: true}, method: (@liked ? :delete : :post ), class: "btn " + (@liked ? "btn-warning" : "btn-outline-warning" ) %>
+    </div>
+<% end %>

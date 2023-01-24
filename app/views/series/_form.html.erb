@@ -9,7 +9,7 @@
     </div>
   <% end %>
 
-  <%=  content_tag :div, class: "form-group", data: {controller: "char-counter", "char-counter-limit-value": 100 } do %>
+  <%= content_tag :div, class: "form-group", data: {controller: "char-counter", "char-counter-limit-value": 100 } do %>
     <%= content_tag :h3, "Title" %>
     <%= form.text_field :title, class: "form-control", placeholder: "Enter Title", data: {action: "char-counter#update" } %>
     <%= content_tag :div, class: "d-flex flex-direction-row justify-content-end" do %>
