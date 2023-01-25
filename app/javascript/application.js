@@ -10,8 +10,6 @@ import("jqtree");
 import "./custom_confirm"
 
 
-require("@rails/ujs").start()
-
 
 let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
 let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
