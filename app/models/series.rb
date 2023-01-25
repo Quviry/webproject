@@ -58,6 +58,5 @@ class Series < ApplicationRecord
   before_validation do
     self.tags = (tags_list || []).map { |title| Tag.where(title:).first_or_create }
     self.genres = Genre.where(title: (genres_list || []))
-    thumbnail.save
   end
 end
