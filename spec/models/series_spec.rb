@@ -70,16 +70,16 @@ RSpec.describe Series, type: :model do
   # describe "Update" do
   # end
 
-  def attach_random_image(_size, format, target)
+  def attach_random_image(size, format, target)
     name = Faker::Alphanumeric.alpha(number: 30)
     File.open("./tmp/#{name}.#{format}", "wb") do |saved_file|
-      URI.parse(Faker::Avatar.image(slug: name, size: "300x300", format:)).open do |read_file|
+      URI.parse(Faker::Avatar.image(slug: name, size:, format:)).open do |read_file|
         saved_file.write(read_file.read)
       end
     end
     target.attach(io: File.open("./tmp/#{name}.#{format}", "rb"), filename: "#{name}.#{format}")
-    target.save
-    File.delete("./tmp/#{name}.#{format}")
+    # target.save
+    # File.delete("./tmp/#{name}.#{format}")
   end
 
   describe "Delete" do
@@ -88,7 +88,7 @@ RSpec.describe Series, type: :model do
                               user: User.first, genres_list: ["Action"], genre_id: Genre.first.id,
                               tags_list: %w[tag1 tag2 tag3], type: "Comics")
       attach_random_image("300x300", "png", c.thumbnail)
-      attach_random_image("1200x900", "png", c.cover)
+      attach_random_image("960x1440", "png", c.cover)
       c
     end
 
@@ -97,7 +97,7 @@ RSpec.describe Series, type: :model do
                               user: User.first, genres_list: ["Comedy"], genre_id: Genre.first.id,
                               tags_list: %w[tag1 tag2 tag3], type: "Comics")
       attach_random_image("300x300", "png", c.thumbnail)
-      attach_random_image("1200x900", "png", c.cover)
+      attach_random_image("960x1440", "png", c.cover)
       c
     end
 
@@ -106,9 +106,22 @@ RSpec.describe Series, type: :model do
                               user: User.first, genres_list: ["Drama"], genre_id: Genre.first.id,
                               tags_list: %w[tag1 tag2 tag3], type: "Comics")
       attach_random_image("300x300", "png", c.thumbnail)
-      attach_random_image("1200x900", "png", c.cover)
+      attach_random_image("960x1440", "png", c.cover)
+      c.save
       rand(1..10).times { ComicEpisode.new(series_id: c.id).save(validation: false) }
       c
+    end
+
+    it "Check object with tags" do
+      expect(object_with_tags).not_to be_nil
+    end
+
+    it "Check object with genres" do
+      expect(object_with_genres).not_to be_nil
+    end
+
+    it "Check object with episodess" do
+      expect(object_with_episodes).not_to be_nil
     end
 
     it "Cascade tags relation" do
