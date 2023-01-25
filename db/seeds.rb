@@ -28,22 +28,19 @@ end
 def attach_random_image(size, format, target)
   name = Faker::Alphanumeric.alpha(number: 30)
   File.open("./tmp/#{name}.#{format}", "wb") do |saved_file|
-    URI.open(Faker::Avatar.image(slug: name, size: "300x300", format: format)) do |read_file|
+    URI.open(Faker::Avatar.image(slug: name, size: size, format: format)) do |read_file|
       saved_file.write(read_file.read)
     end
   end
   source = File.open("./tmp/#{name}.#{format}", "rb")
   target.attach(io: source, filename: "#{name}.#{format}")
-  target.save
-  source.close
-  File.delete("./tmp/#{name}.#{format}")
 end
 
 Comics.where(title: "Comics 1").destroy_all
 
 c = Comics.new(title: "Comics 1", url: "Comics-1", description: "Description of the comics", user: User.first, genres_list: ["Action"], genre_id: Genre.first.id)
 attach_random_image("300x300", "png", c.thumbnail)
-attach_random_image("1200x900", "png", c.cover)
+attach_random_image("960x1440", "png", c.cover)
 
 unless c.save
   p c.errors

@@ -8,6 +8,7 @@ module SessionHelper
 
   def confirmed?
     user = instance_variable_get(:@current_user)
+    Rails.logger.debug user
     user.nil? || user.confirmed
   end
 end

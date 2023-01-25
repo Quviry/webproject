@@ -46,6 +46,9 @@ Rails.application.routes.draw do
   get "/subscription/:id", to: "subscription#show", as: "subscribe_series"
   post "/subscription/:id", to: "subscription#create"
   delete "/subscription/:id", to: "subscription#destroy"
+
+  get "activation/:code", to: "profile_activator#show", as: "activate"
+  post "activation", to: "profile_activator#new"
 end
 
 # rubocop:enable Metrics/BlockLength

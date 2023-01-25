@@ -108,3 +108,9 @@ gem "pagy", "~> 6.0"
 gem "faker", "~> 3.1"
 
 gem "rubocop-discourse", "~> 3.0"
+
+gem "russian", "~> 0.6.0"
+
+gem "erb_lint", "~> 0.3.1"
+
+gem "ruby-lsp", "~> 0.3.8"

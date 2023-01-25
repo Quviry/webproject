@@ -9,6 +9,10 @@ class CreateSeries < ActiveRecord::Migration[7.0]
       t.text :description
       t.references :genre, null: false
 
+      t.integer :likes_count
+      t.integer :views_count
+      t.integer :comments_count
+
       # t.attachment :thumbnail
       # t.attachment :cover
       t.references :user, null: false, default: 0

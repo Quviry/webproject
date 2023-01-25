@@ -1,6 +1,7 @@
 // add some scss code
 
 @import 'bootstrap/scss/bootstrap';
+@import "toastr/toastr";
 
 .top-nav__item .item--selected {
     border-bottom: 3px solid #262636;

@@ -18,7 +18,7 @@
             <%= content_tag(:span, @series.likes.count.to_s + " likes")  %>
         </div>
         <div class="container d-flex">
-            <% if @current_user.views.exists?(episode: @series.episodes) %>
+            <% if !@current_user.nil? && @current_user.views.exists?(episode: @series.episodes) %>
                 <%= link_to "Continue reading", episode_path(@series.episodes.first), class: "btn btn-outline-dark me-2" %>
             <% else %>
                 <%= tag.button "Start reading", class: "btn" %>

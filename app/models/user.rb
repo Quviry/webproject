@@ -22,14 +22,18 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :commented_episodes, through: :comments, source: :episode
 
+  has_one :profile_activator, dependent: :destroy_async
+
   # extra attributes
   attr_accessor :password, :confirm_password
+
+  after_create :create_profile_activator
 
   # validations
   validates :email, uniqueness: { message: I18n.t("user.login.taken") },
                     presence: { message: I18n.t("user.login.presence") }
   validates :password, length: { minimum: 8, message: I18n.t("user.password.short") },
-                       presence: { message: I18n.t("user.password.presence") }
+                       presence: { message: I18n.t("user.password.presence") }, if: :should_validate_password?
 
   before_save do
     self.login = email.split("@")[0] if login.nil?  # TODO: take dif test
@@ -49,6 +53,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def should_validate_password?
+    new_record? || password.present?
+  end
 
   def encrypt(data)
     Digest::SHA2.new(256).hexdigest data

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_225058) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_25_154918) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -93,6 +93,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_225058) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "profile_activators", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_profile_activators_on_code", unique: true
+    t.index ["user_id"], name: "index_profile_activators_on_user_id", unique: true
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.integer "user_id"
     t.string "display_name"
@@ -110,6 +119,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_225058) do
     t.string "url", default: "", null: false
     t.text "description"
     t.integer "genre_id", null: false
+    t.integer "likes_count"
+    t.integer "views_count"
+    t.integer "comments_count"
     t.integer "user_id", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

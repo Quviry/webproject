@@ -84,7 +84,7 @@
     </div>
   </header>
   <% if !confirmed? %>
-    <div class="py-2 d-flex justify-content-center shadow-sm"> CONFIRM YOUR ACCOUNT FOR FULL FUNCTIONAL </div>
+    <div class="py-2 d-flex justify-content-center shadow-sm align-items-center"> Confirm your account for full functional <%= button_to "Activate", "/activation", method: :post, class: "btn btn-success ms-2", onclick: "(event)=>{event.target.destroy()}()" %> </div>
   <% end %>
   <main>
     <%= yield %>
