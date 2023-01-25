@@ -17,11 +17,9 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nave-signup-tab" data-bs-toggle="tab" data-bs-target="#nav-signup" type="button" role="tab" aria-controls="nav-signup" aria-selected="true">Signup</button>
-            <button class="nav-link" id="nave-login-tab" data-bs-toggle="tab" data-bs-target="#nav-login" type="button" role="tab" aria-controls="nav-login" aria-selected="false">Login</button>
-          </div>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active" id="nave-signup-tab" data-bs-toggle="tab" data-bs-target="#nav-signup" type="button" role="tab" aria-controls="nav-signup" aria-selected="true">Signup</button>
+          <button class="nav-link" id="nave-login-tab" data-bs-toggle="tab" data-bs-target="#nav-login" type="button" role="tab" aria-controls="nav-login" aria-selected="false">Login</button>
         </div>
         <div class="modal-body">
           <div class="tab-content" id="nav-tabContent">
@@ -37,10 +35,6 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
       </div>
     </div>
   </div>
@@ -54,7 +48,7 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 top-nav__item">
           <li><a href="/" class="nav-link px-2 <%= url_child_of( "index" ) %>">Home</a></li>
-          <li><a href="/comics?genre=all" class="nav-link px-2 <%= url_child_of( "comics" ) %>">Comics</a></li> <!-- TODO: active item -->
+          <li><a href="/comics?genre=all" class="nav-link px-2 <%= url_child_of( "comics" ) %>">Comics</a></li>
           <li><a href="/novels?genre=all" class="nav-link px-2 <%= url_child_of( "novels" ) %>">Novels</a></li>
           <li><a href="#" class="nav-link px-2 text-dark">Discover</a></li>
         </ul>
@@ -64,13 +58,25 @@
             aria-label="Search">
         </form>
 
-        <div class="text-end text-bg-info d-flex p-2 justify-content-center align-items-center">
+        <div class="text-end d-flex p-2 justify-content-center align-items-center">
           <% if authorised? %>
-            <div class="px-2"> <%= @current_user.login %> </div>
-            <%= link_to "Logout", logout_path, class: "btn btn-outline-dark mx-2"%>
+            <div class="dropdown">
+              <%= user_avatar nil, height: 32, type:"button", "data-bs-toggle": "dropdown", "aria-expanded": "false" %>
+              <ul class="dropdown-menu">
+                <li class="d-flex align-items-center">
+                  <%= user_avatar nil, height: 24, type:"button", "data-bs-toggle": "dropdown", "aria-expanded": "false" %>
+                  <%= link_to @current_user.login, @current_user, class: "dropdown-item"%>
+                </li>
+                <li class="d-flex"><hr class="dropdown-divider"></li>
+                <li class="d-flex"><%= link_to  "", class: "dropdown-item" do %><%= image_tag "/images/gear.png", height: 24 %>  Settings<% end %></li>
+                <li class="d-flex"><%= link_to  "", class: "dropdown-item" do %><%= image_tag "/images/question-mark.png", height: 24 %>  Help<% end %></li>
+                <li class="d-flex"><hr class="dropdown-divider"></li>
+                <li class="d-flex"><%= link_to logout_path, class: "dropdown-item" do %><%= image_tag "/images/stand-by.png", height: 24 %>   Logout <%end%></li>
+              </ul>
+            </div>
             <%= link_to active_user_artist? ? "Dashboard" : "Publish", dashboard_path, class: "btn btn-outline-dark mx-2 " %>
           <% else %>
-              <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal"
+              <button type="button" class="btn btn-outline-dark me-2" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">Sign up</button>
           <% end %>
         </div>

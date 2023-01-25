@@ -38,5 +38,5 @@ import "./controllers"
 // actiontext
 import "trix"
 import "@rails/actiontext"
-import { Turbo } from "@hotwired/turbo-rails"
+
 

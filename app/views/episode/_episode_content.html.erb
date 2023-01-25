@@ -1,5 +1,5 @@
 <% episode = @episode %>
-<div class="episode container my-5" style="display: none" id="frame-episode-<%= episode.id %>" data-viewer-target="container" for="<%= episode.id %>">
+<div class="episode container my-5" id="frame-episode-<%= episode.id %>" data-viewer-target="container" for="<%= episode.id %>">
     <div class="episode-viewer-top" >
         <p class="title"><%= episode.title %></p>
         <p class="date"><%= episode.created_at.strftime("%F") %></p>
@@ -13,6 +13,30 @@
         <%= episode.story %>
     <% end %>
     <div class="episode-viewer-bot">
-        Author: <%= episode.series.user.login %>
+        <%= tag.div class: "data-author" do %>
+            <%= user_avatar nil, "autor" %>
+            <%= tag.div class: "data-author-name" do %>
+                <%= episode.series.user.login %>
+                <%= tag.div class: "data-author-name__default" do %>
+                    <%= t "Creator" %>
+                <% end %>
+            <% end %>
+        <% end %>
+        <%= tag.div class: "fishie-comment" do %>
+            <%= tag.div classs: "comment-summary" do %>
+                <%= tag.div classs: "comment-count" do %>
+                    Comments(<%= episode.comments.count %>)
+                <% end %>
+                <%= link_to "See all", "#" %>
+            <% end %>
+            <% if episode.comments.count > 0 %>
+                <%= tag.div class: "top-comment"  do %>
+                    Top comment
+                <% end %>
+            <% end %>
+            <%= tag.button class: "btn btn-outline-secondary add-comment_fishie" do %>
+                ADD COMMENT
+            <% end %>
+        <% end %>
     </div>
 </div>

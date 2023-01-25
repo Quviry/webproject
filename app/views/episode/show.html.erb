@@ -1,10 +1,11 @@
 <div class="episode-viewer" id="episode-viewer" data-controller="viewer">
-    <%= turbo_frame_tag "pagination-prev", src: episode_path(@prev_episode, format: :turbo_stream, page: "prev"), loading: :lazy unless @prev_episode.nil? %>
-    <div id="episodes" class="container"></div>
-    <%= turbo_frame_tag "pagination", src: episode_path(@episode, format: :turbo_stream), loading: :lazy %>
+        <%= turbo_frame_tag "pagination-prev", lazy_src: episode_path(@prev_episode, format: :turbo_stream, page: "prev"), loading: :lazy unless @prev_episode.nil? %>
+        <div id="episodes" class="container"></div>
+        <%= turbo_frame_tag "pagination", src: episode_path(@episode, format: :turbo_stream), loading: :lazy %>
 
     <div id="viewer-sidebar">
-        <div> <%= link_to "Some Page", series_info_path(@episode.series.url) %> </div>
+        <div data-viewer-target="infoSection" class="sidebar-section sidebar-section--closed"> <%= link_to @episode.series.title, series_info_path(@episode.series.url) %> </div>
+        <div data-viewer-target="commentsSection" class="sidebar-section"> sides </div>
     </div>
 
     <div class="toolbar" data-viewer-target="toolbar">
@@ -13,6 +14,7 @@
                 <%= @episode.title %>
             </div>
         </div>
+
         <div class="toolbar-item">
             <%= turbo_frame_tag "likes_turbo_frame", src: like_episode_path(@episode, format: :turbo_stream) do %>
                 <div id="like">
@@ -22,11 +24,20 @@
         </div>
 
         <div class="toolbar-item">
-            <%= link_to "List" %>
-            <%= link_to "Comment" %>
+            <%= link_to "List", class: "text-decoration-none toolbar-item-button toolbar-item-button--active", data: {action: "viewer#openInfo"}, "data-viewer-target": "sidebarActor" do %>
+                <%= image_tag "/images/s_list.png", width: 24 %>
+                <i>List</i>
+            <% end %>
+            <%= link_to "Comment", class: "text-decoration-none toolbar-item-button", data: {action: "viewer#openComments"}, "data-viewer-target": "sidebarActor"  do %>
+                <%= image_tag "/images/chat.png", width: 24 %>
+                <i>Comments</i>
+            <% end %>
             <%= link_to "Prev" %>
             <%= link_to "Next" %>
-            <%= tag.button "Full", id: "toolbar-item_fullscreen", data: {action: "viewer#toggleFullScreen"} %>
+            <%= link_to "Full",id: "toolbar-item_fullscreen", class: "text-decoration-none toolbar-item-button", data: {action: "viewer#toggleFullScreen"} do %>
+                <%= image_tag "/images/maximize.png", width: 24 %>
+                <i>Full</i>
+            <% end %>
         </div>
     </div>
 </div>

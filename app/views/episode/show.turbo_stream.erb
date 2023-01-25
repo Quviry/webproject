@@ -1,25 +1,27 @@
 <% if params[:page] == "prev" %>
-  <%= turbo_stream.prepend "episodes" do %>
+
+  <%= turbo_stream.prepend "episodes", action: "log" do %>
     <%= render partial: "episode/episode_content", object: @episode %>
   <% end %>
+
 <% else %>
+
   <%= turbo_stream.append "episodes" do %>
     <%= render partial: "episode/episode_content", object: @episode %>
   <% end %>
+
 <% end %>
 
 <% unless @next_episode.nil? %>
   <%= turbo_stream.replace "pagination" do %>
-    <%= turbo_frame_tag "pagination", src: episode_path(@next_episode, format: :turbo_stream, page: "next"), loading: :lazy do %>
-      <%= loader %>
+    <%= turbo_frame_tag "pagination", src: episode_path(@next_episode, format: :turbo_stream, page: "next"), loading: :lazy, data_viewer_target: "next-frame" do %>
+      <%= tag.p %>
     <% end %>
   <% end %>
 <% end %>
 
 <% unless @prev_episode.nil? %>
   <%= turbo_stream.replace "pagination-prev" do %>
-    <%= turbo_frame_tag "pagination-prev", src: episode_path(@prev_episode, format: :turbo_stream, page: "prev"), loading: :lazy do %>
-      <%= loader %>
-    <% end %>
+    <%= turbo_frame_tag "pagination-prev", lazy_src: episode_path(@prev_episode, format: :turbo_stream, page: "prev"), data_viewer_target: "prev-frame" %>
   <% end %>
 <% end %>

@@ -1,71 +1,121 @@
 import { Controller } from "@hotwired/stimulus"
-import { timers } from "jquery"
 
 // Connects to data-controller="viewer"
 export default class extends Controller {
-  static targets = ["container", "toolbar"]
-  static values = {active: String}
+  static targets = ["container", "toolbar", "infoSection", "commentsSection", "sidebarActor"]
+  static values = { active: String }
 
   connect() {
-    window.scrollTo(0, document.body.scrollHeight);
-    addEventListener("scroll", this.clear);
-    addEventListener("turbo:before-render", this.stopload)
-    this.element.addEventListener("turbo:before-stream-render", this.stopload)
+    addEventListener("scroll", this.watchActivePage);
+    addEventListener("scroll", this.watchLoadPage);
   }
 
-  containerTargetConnected(element){
-    element.style.display = "block";
+  // new page uploaded
+  containerTargetConnected(element) {
+    if(document.upper_page){
+      document.upper_page.realize();
+    }
   }
 
-  stopload(event){
-    console.log(event);
-    event.detail.resume();
+  // !Outer function
+  watchLoadPage(event) {
+    let scrollY = this.scrollY;
+    if (scrollY < 1.0 && event.timeStamp > 1000) {
+      const prev_pagy = document.getElementById("pagination-prev")
+      prev_pagy.setAttribute("src", prev_pagy.getAttribute("lazy_src"))
+
+      document.upper_page = new class Page{
+        constructor(){
+          this.old_height = $(document).height();
+          this.old_scroll = $(window).scrollTop();
+          this.flag = true;
+        }
+        realize(){
+          window.scrollTo({
+            top: this.old_scroll + $(document).height() - this.old_height,
+            left: 0,
+            behavior: 'instant',
+          })
+        }
+      }
+    }
   }
 
-  clear(event){
-    let active_page = null;
+  // !Outer function
+  /**
+   * Event handler for scroll, looking for new page in focus, updates #episode-viewer
+   * @param {Event} event
+   */
+  watchActivePage(event) {
     const collection = document.querySelectorAll('[data-viewer-target="container"]');
 
+    let active_page = null;
     collection.forEach((item) => {
-      if(getPositionInVieport(item)){
+      const rect = item.getBoundingClientRect();
+      if (rect.bottom >= 0 && rect.top <= (window.innerHeight || document.documentElement.clientHeight)) {
         active_page = item;
       }
     });
 
     active_page ||= collection[0]
     document.getElementById("episode-viewer").setAttribute("data-viewer-active-value", active_page.getAttribute("for"))
+  }
 
-    if (this.active_page != active_page){
-      this.active_page = active_page
+  /**
+   * New active page "event"
+   * @param {String} value
+   * @param {String} previousValue
+   */
+  activeValueChanged(value, previousValue) {
+    if (value != "") {
+      this.updateDescription()
+      this.updateLike()
+      this.setNewLink()
     }
   }
 
-  activeValueChanged(){
-    if(this.activeValue != ""){
-      this.toolbarTarget.querySelector("#likes_turbo_frame").src = "/like/" + this.activeValue + ".turbo_stream"; // /like/9.turbo_stream
-      this.toolbarTarget.querySelector("#toolbar-item-description__item").textContent = this.containerTargets.find(item => item.getAttribute("for") == this.activeValue).querySelector(".title").textContent ;
-      history.pushState({}, '', "/episode/" + this.activeValue)
-    }
+  updateLike() {
+    this.toolbarTarget.querySelector("#likes_turbo_frame").src = "/like/" + this.activeValue + ".turbo_stream"; // /like/9.turbo_stream
+  }
+
+  updateDescription() {
+    this.toolbarTarget.querySelector("#toolbar-item-description__item").textContent = this.containerTargets.find(item => item.getAttribute("for") == this.activeValue).querySelector(".title").textContent;
+  }
+
+  setNewLink() {
+    history.pushState({}, '', "/episode/" + this.activeValue)
   }
 
   toggleFullScreen(event) {
     event.preventDefault();
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
+      this.enterFullscreen();
     } else if (document.exitFullscreen) {
-      document.exitFullscreen();
+      this.exitFullScreen();
     }
   }
-}
-/**
- *
- * @param {Element} item
- * @returns {boolean} isInViewport
- */
-function getPositionInVieport(item){
-  const rect = item.getBoundingClientRect();
 
-  const isInViewport = rect.bottom  >= 0 &&
-          rect.top <= (window.innerHeight || document.documentElement.clientHeight);
-  return isInViewport
+  enterFullscreen() {
+    document.documentElement.requestFullscreen();
+  }
+
+  exitFullScreen() {
+    document.exitFullscreen();
+  }
+
+  openInfo(event){
+    event.preventDefault();
+    this.sidebarActorTargets.forEach((target)=> {target.classList.remove("toolbar-item-button--active")})
+    event.target.classList.add("toolbar-item-button--active")
+    this.infoSectionTarget.classList.remove("sidebar-section--closed")
+    this.commentsSectionTarget.classList.add("sidebar-section--closed")
+  }
+
+  openComments(event){
+    event.preventDefault();
+    this.sidebarActorTargets.forEach((target)=> {target.classList.remove("toolbar-item-button--active")})
+    event.target.classList.add("toolbar-item-button--active")
+    this.commentsSectionTarget.classList.remove("sidebar-section--closed")
+    this.infoSectionTarget.classList.add("sidebar-section--closed")
+  }
 }

@@ -15,7 +15,7 @@
     <% for series in @series %>
     <div class="d-flex flex-column m-3">
         <%= link_to series_path(title: series.url)  do %>
-            <%= image_tag series.cover, height: "303px", width: "202px" %>
+            <%= image_tag series.cover, height: "303px", width: "202px", class: "card" %>
         <% end %>
         <div class="d-flex justify-content-between">
             <span><%= series.main_genre.title %></span>

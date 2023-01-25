@@ -11,7 +11,10 @@ ru:
       error: "Ошибка, не авторизован!"
   activerecord:
     models:
-      user: Пользователь
+      user:
+        one: "Аккаунт"
+        few: "Аккаунта"
+        many: "Аккаунтов"
       series: Серия
       comic_episode: Эпизод комикса
       novel_episode: Эпизод романа
@@ -21,3 +24,14 @@ ru:
     submit:
       create: Создать %{model}
       update: Обновить %{model}
+  number:
+    human:
+      decimal_units:
+        format: "%n%u"
+        units:
+          unit: ""
+          thousand: K
+          million: M
+          billion: B
+          trillion: T
+          quadrillion: Q

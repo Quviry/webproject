@@ -77,6 +77,40 @@ main {
     padding: 15px;
     color: aliceblue;
     z-index: 9;
+
+    .toolbar-item-button{
+        color: #fff;
+        font-size: small;
+        display: inline-grid;
+        justify-items: center;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        transition: 0.1s;
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        &:active{
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        i{
+            color: white;
+            font-size: 0.5rem;
+        }
+        img{
+            filter: invert(1);
+        }
+        &.toolbar-item-button--active{
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+
+.avatar{
+    border-radius: 50%;
+    &.autor{
+        height: auto;
+        width: 64px;
+    }
 }
 
 .episode {
@@ -99,14 +133,21 @@ main {
     }
 }
 
-*:fullscreen .episode-show header{
-    display: none;
+*:fullscreen .episode-show{
+    header{
+        display: none;
+    }
+    #viewer-sidebar{
+        top: 0;
+    }
 }
 
 .episode-viewer {
-    display: flex;
-    flex-direction: column;
     width: 900px;
+}
+
+.sidebar-section--closed{
+    visibility: hidden;
 }
 
 .episode-viewer-top {
@@ -114,10 +155,13 @@ main {
     align-self: normal;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 10px;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
 
     .title {
-        font-size: 24px;
+        font-size: 36px;
         font-weight: bold;
     }
 
@@ -139,6 +183,39 @@ main {
     background-color: rgb(235, 235, 235);
     top: 54px;
     z-index: 3;
+}
+
+.data-author{
+    width: 80%;
+    align-self: center;
+    margin: auto;
+    margin-top: 2rem;
+    text-align: start;
+    display: flex;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    .data-author-name{
+        margin-left: 2rem;
+        display: flex;
+        margin-bottom: auto;
+        align-items: center;
+        .data-author-name__default{
+            border-radius: 0.15rem;
+            font-size: 0.6rem;
+            background-color: rgb(225, 199, 28);
+            margin-left: 1rem;
+            padding: 0.15rem;
+        }
+    }
+}
+
+.fishie-comment{
+    .add-comment_fishie{
+        width: 80%;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    margin-bottom: 5rem;
 }
 
 #turbo-confirm {

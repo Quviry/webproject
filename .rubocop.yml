@@ -19,6 +19,10 @@ Style/Documentation:
   - db/migrate/*
 # -
 
+RSpec/Rails/InferredSpecType:
+  Inferences:
+  - spec/**/*.rb
+
 Style/RedundantFetchBlock:
   Exclude:
   - config/puma.rb

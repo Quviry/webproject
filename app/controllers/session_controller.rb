@@ -15,7 +15,7 @@ class SessionController < ApplicationController
       session[:current_user_id] = user.id
     else
       @user = User.new
-      @user.errors.add(:base, "fuck")
+      @user.errors.add(:base, "Неверный логин или пароль")
       render :new
     end
   end

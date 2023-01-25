@@ -32,7 +32,7 @@ class User < ApplicationRecord
                        presence: { message: I18n.t("user.password.presence") }
 
   before_save do
-    self.login = email.split("@")[0] if login.nil? # TODO: take dif test
+    self.login = email.split("@")[0] if login.nil?  # TODO: take dif test
     self.confirmed = false if confirmed.nil?
     self.encrypted_password = encrypt(password) unless password.nil?
   end
