@@ -1,12 +1,14 @@
-<%= form_with(model: series, url: path, html: {method: method}, class: "dropzone", data: {controller: "new-comic"}) do |form| %>
-  <% if series.errors.any? %>
-    <div class="card m-2" style="color: red">
-      <ul>
-        <% series.errors.each do |error| %>
-          <li><%= error.message %></li>
-        <% end %>
-      </ul>
-    </div>
+<%= form_with(model: series, url: path, html: {method: method}, class: "dropzone", autoscroll: true, data: {controller: "new-comic", turbo_frame: "errors", autoscroll_block: "start"}) do |form| %>
+  <%= turbo_frame_tag "errors" do %>
+    <% if series.errors.any? %>
+      <div class="card m-2" style="color: red">
+        <ul>
+          <% series.errors.each do |error| %>
+            <li><%= error.message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   <% end %>
 
   <%= content_tag :div, class: "form-group", data: {controller: "char-counter", "char-counter-limit-value": 100 } do %>

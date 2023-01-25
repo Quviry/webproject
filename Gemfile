@@ -114,3 +114,5 @@ gem "russian", "~> 0.6.0"
 gem "erb_lint", "~> 0.3.1"
 
 gem "ruby-lsp", "~> 0.3.8"
+
+gem "htmlbeautifier", "~> 1.4"
