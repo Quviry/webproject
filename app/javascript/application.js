@@ -8,6 +8,7 @@ import * as datepicker from "jquery-datetimepicker"
 import("jquery-ui");
 import("jqtree");
 import "./custom_confirm"
+import "./tostify"
 
 
 
@@ -15,6 +16,12 @@ let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
   return new bootstrap.Popover(popoverTriggerEl)
 })
+
+let toastsTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="toast"]'))
+let toastsList = toastsTriggerList.map(function (toastTriggerEl) {
+  return new bootstrap.Toast(toastTriggerEl)
+})
+
 
 import * as ActiveStorage from "activestorage"
 ActiveStorage.start()

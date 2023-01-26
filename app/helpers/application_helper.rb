@@ -25,4 +25,12 @@ module ApplicationHelper
     controller_name == "episode" && action_name == "show" &&
       instance_variable_get(:@series).type.downcase.pluralize == child
   end
+
+  def message_tag(type, msg)
+    tag.flash msg, method: type
+  end
+
+  def turbo_flash(type, msg)
+    tag.turbo_stream tag.template(msg, escape: false), action: "flash", method: type, escape: false
+  end
 end

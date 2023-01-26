@@ -1,6 +1,7 @@
 // add some scss code
 
 @import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
 @import "toastr/toastr";
 
 .top-nav__item .item--selected {
@@ -11,6 +12,11 @@
 .signup-card {
     max-width: 25%;
     margin: auto;
+}
+
+#messages_box{
+    display: none;
+    visibility: hidden;
 }
 
 .footer {

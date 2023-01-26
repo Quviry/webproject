@@ -2,8 +2,10 @@
 
 # User account controller
 class UserController < ApplicationController
-  # before_action :set_user, only: %i[show edit update destroy]
-  before_action :authenticate, except: %i[new create]
+  # before_action :authenticate, except: %i[new create]
+  # before_action :mirror, only: [:show]
+
+  def show; end
 
   def new
     @user = User.new
@@ -23,17 +25,14 @@ class UserController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    # @user = User.find(params[:id])
-  end
-
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:email, :password)
   end
 
-  def authenticate
-    # @user = User.find(params[:id])
+  def mirror
+    return unless params[:id].to_i == @current_user.id
+
+    redirect_to :index
   end
 end

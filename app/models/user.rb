@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :commented_episodes, through: :comments, source: :episode
 
   has_one :profile_activator, dependent: :destroy_async
+  has_one :profile, dependent: :destroy_async
 
   # extra attributes
   attr_accessor :password, :confirm_password

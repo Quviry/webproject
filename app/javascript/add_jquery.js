@@ -4,6 +4,8 @@ window.$ = jquery
 
 import "bootstrap"
 
+window.bootstrap = require("bootstrap");
+
 document.addEventListener("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip()
   $('[data-toggle="popover"]').popover()
@@ -11,4 +13,4 @@ document.addEventListener("turbolinks:load", () => {
   $('#toast').toast('show')
 })
 
-global.toastr = require("toastr")
+

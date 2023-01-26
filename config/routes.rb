@@ -49,6 +49,8 @@ Rails.application.routes.draw do
 
   get "activation/:code", to: "profile_activator#show", as: "activate"
   post "activation", to: "profile_activator#new"
+
+  resources :user, path: :profile
 end
 
 # rubocop:enable Metrics/BlockLength
