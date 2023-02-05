@@ -1,0 +1,9 @@
+<%= form_with model: comment, url: , id: "new_comment_form", remote: true do |form| %>
+    <%= form.hidden_field :user_id unless @current_user.nil? %>
+    <%= form.hidden_field :episode_id %>
+    <%= form.text_area :body, class: "w-100 form-control" %>
+    <% if params["action"] == "edit" %>
+        <%= form.button "Cancel", value: "cencel", name: "commit", class: "align-self-start btn btn-secondary" %>
+    <% end %>
+    <%= form.submit class: "align-self-end btn btn-primary" %>
+<% end %>

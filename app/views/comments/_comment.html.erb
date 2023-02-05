@@ -1,0 +1,13 @@
+<%= turbo_frame_tag dom_id(comment), class: "pt-2" do %>
+    <%= comment.body %>
+    <% if @current_user == comment.user %>
+        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <ul class="dropdown-menu dropdown-menu-end w-auto">
+            <li><%= button_to "Delete", episode_comment_url(comment.episode, comment), method: :delete, class: "dropdown-item" %></li>
+            <li><%= link_to "Edit", edit_episode_comment_url(comment.episode, comment), class: "dropdown-item" %></li>
+        </ul>
+    <% end %>
+    <% if comment.replies.size != 0 %>
+        <%= button_to "Replies " + comment.replies.size.to_s %>
+    <% end %>
+<% end %>

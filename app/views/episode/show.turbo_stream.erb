@@ -15,7 +15,7 @@
 <% unless @next_episode.nil? %>
   <%= turbo_stream.replace "pagination" do %>
     <%= turbo_frame_tag "pagination", src: episode_path(@next_episode, format: :turbo_stream, page: "next"), loading: :lazy, data_viewer_target: "next-frame" do %>
-      <%= tag.p %>
+      <%= tag.p  "Loading..." %>
     <% end %>
   <% end %>
 <% end %>

@@ -50,7 +50,12 @@ Rails.application.routes.draw do
   get "activation/:code", to: "profile_activator#show", as: "activate"
   post "activation", to: "profile_activator#new"
 
-  resources :user, path: :profile
+  get "episode/:id/summary", to: "episode#summary", as: "summary_episode"
+
+  resources :episode do
+    resources :comments, as: "comments"
+  end
+  # get "episode/:id/comments", to: "comments#index"
 end
 
 # rubocop:enable Metrics/BlockLength

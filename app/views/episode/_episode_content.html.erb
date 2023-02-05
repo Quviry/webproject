@@ -22,12 +22,12 @@
                 <% end %>
             <% end %>
         <% end %>
-        <%= tag.div class: "fishie-comment" do %>
-            <%= tag.div classs: "comment-summary" do %>
-                <%= tag.div classs: "comment-count" do %>
+        <%= tag.div class: "fishie-comment"  do %>
+            <%= tag.div class: "comment-summary justify-items-between" do %>
+                <%= tag.div class: "comment-count" do %>
                     Comments(<%= episode.comments.count %>)
                 <% end %>
-                <%= link_to "See all", "#" %>
+                <%= link_to "See all", "#", class: "link-dark" %>
             <% end %>
             <% if episode.comments.count > 0 %>
                 <%= tag.div class: "top-comment"  do %>
@@ -37,6 +37,6 @@
             <%= tag.button class: "btn btn-outline-secondary add-comment_fishie" do %>
                 ADD COMMENT
             <% end %>
-        <% end %>
+        <% end if @episode.comments_enabled %>
     </div>
 </div>

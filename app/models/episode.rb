@@ -3,11 +3,11 @@
 # Episode, data-containing part of Series
 class Episode < ApplicationRecord
   # relations
-  has_many :views, dependent: :delete_all
+  has_many :views, dependent: :delete_all, counter_cache: true
 
-  has_many :likes, dependent: :delete_all
+  has_many :likes, dependent: :delete_all, counter_cache: true
 
-  has_many :comments, dependent: :delete_all
+  has_many :comments, dependent: :delete_all, counter_cache: true
 
   belongs_to :series, touch: true
 

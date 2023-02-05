@@ -1,4 +1,20 @@
 ru:
+  view:
+    one: просмотр
+    few: просмотра
+    many: просмотров
+  like:
+    one: лайк
+    few: лайка
+    many: лайков
+  comment:
+    one: комментарий
+    few: комментария
+    many: комментариев
+  episode:
+    one: эпизод
+    few: эпизода
+    many: эпизодов
   user:
     login:
       taken: "Пользователь с таким email уже существует, попробуйте другой"
@@ -26,6 +42,11 @@ ru:
       update: Обновить %{model}
   number:
     human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: false
+        strip_insignificant_zeros: true
       decimal_units:
         format: "%n%u"
         units:

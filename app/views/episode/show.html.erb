@@ -4,15 +4,60 @@
         <%= turbo_frame_tag "pagination", src: episode_path(@episode, format: :turbo_stream), loading: :lazy %>
 
     <div id="viewer-sidebar">
-        <div data-viewer-target="infoSection" class="sidebar-section sidebar-section--closed"> <%= link_to @episode.series.title, series_info_path(@episode.series.url) %> </div>
-        <div data-viewer-target="commentsSection" class="sidebar-section"> sides </div>
+        <div data-viewer-target="infoSection" class="sidebar-section ">
+            <%= tag.div id: "sidebar-thumb-top" %>
+            <%= tag.div  do %>
+                <%= tag.div class: "d-flex", id: "series-info-container" do %>
+                    <%= image_tag @series.cover, height: 120, id: "series-cover-info" %>
+                    <%= tag.div class: "mx-1" do %>
+                        <%= link_to series_info_path(@series.url), class: "text-decoration-none link-dark" do %>
+                            <%= tag.p @series.title, id: "series-info-title" %>
+                        <% end %>
+                        <%= tag.p series_views_subscribers(@series) , id: "series-info-stats" %>
+                    <% end %>
+                <% end %>
+                <%= link_to series_info_path(@series.url), class: "text-decoration-none link-dark" do %>
+                    <%= tag.p @series.description.truncate(120, omission: "..."), class: "p-2" %>
+                <% end %>
+                <%= turbo_frame_tag "subscribe_turbo_frame", class: "text-center", src: subscribe_series_path(@series, format: :turbo_stream) do %>
+                    <%= tag.div id: "subscribe" do %>
+                        <%= loader %>
+                    <% end %>
+                <% end %>
+                <%= tag.div do %>
+                    <%= tag.div episodes_count(@series), class: "list-header" %>
+                    <%= tag.div class: "list-body" do %>
+                        <% @series.episodes.each do |episode| %>
+                            <%= link_to episode_path(episode), class: "text-decoration-none" do %>
+                                <%= tag.div class: "body__item " + (episode == @episode ? "body__item--selected" : ""), data: {viewer_target: "bodyItem", for: episode.id} do %>
+                                    <%= image_tag episode.thumbnail, height: 52, class: "item__thumb" %>
+                                    <%= tag.div class: "item__info" do %>
+                                        <%= tag.div I18n.t("episode", count: 1).capitalize +  " " + episode.scene.to_s, class: "info__label" %>
+                                        <%= tag.div episode.title, class: "info__title" %>
+                                    <% end %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        </div>
+        <div data-viewer-target="commentsSection" class="sidebar-section sidebar-section--closed">
+            <%= turbo_frame_tag "episode_comments_turbo_frame", src: episode_comments_path(@episode), class: "position-absolute h-100 w-100", lazy: true, data: {viewer_target: "comments"} do %>
+                <div id="summary">
+                    <%= loader %>
+                </div>
+            <% end %>
+        </div>
     </div>
 
     <div class="toolbar" data-viewer-target="toolbar">
-        <div class="toolbar-item" id="toolbar-item-description">
-            <div id="toolbar-item-description__item">
-                <%= @episode.title %>
-            </div>
+        <div class="toolbar-item col-4" id="toolbar-item-description">
+            <%= turbo_frame_tag "summary_episode_turbo_frame", src: summary_episode_path(@episode), class: "d-flex align-items-center px-2" do %>
+                <div id="summary">
+                    <%= loader %>
+                </div>
+            <% end %>
         </div>
 
         <div class="toolbar-item">
@@ -24,17 +69,23 @@
         </div>
 
         <div class="toolbar-item">
-            <%= link_to "List", class: "text-decoration-none toolbar-item-button toolbar-item-button--active", data: {action: "viewer#openInfo"}, "data-viewer-target": "sidebarActor" do %>
+            <%= link_to "List", class: "text-decoration-none toolbar-item-button toolbar-item-button--active", data: {action: "viewer#openInfo", viewer_target: "toolbarList"} do %>
                 <%= image_tag "/images/s_list.png", width: 24 %>
                 <i>List</i>
             <% end %>
-            <%= link_to "Comment", class: "text-decoration-none toolbar-item-button", data: {action: "viewer#openComments"}, "data-viewer-target": "sidebarActor"  do %>
+            <%= link_to "Comment", class: "text-decoration-none toolbar-item-button", data: {action: "viewer#openComments", viewer_target: "toolbarComments"} do %>
                 <%= image_tag "/images/chat.png", width: 24 %>
                 <i>Comments</i>
             <% end %>
-            <%= link_to "Prev" %>
-            <%= link_to "Next" %>
-            <%= link_to "Full",id: "toolbar-item_fullscreen", class: "text-decoration-none toolbar-item-button", data: {action: "viewer#toggleFullScreen"} do %>
+            <%= link_to "Prev", class: "text-decoration-none toolbar-item-button", data: {action: "viewer#", viewer_target: "pgUp"} do %>
+                <%= image_tag "/images/up-arrow.png", width: 24 %>
+                <i>Prev</i>
+            <% end %>
+            <%= link_to "Next", class: "text-decoration-none toolbar-item-button", data: {action: "viewer#", viewer_target: "pgDown"} do %>
+                <%= image_tag "/images/down-arrow.png", width: 24 %>
+                <i>Next</i>
+            <% end %>
+            <%= link_to "Full", id: "toolbar-item_fullscreen", class: "text-decoration-none toolbar-item-button", data: {action: "viewer#toggleFullScreen"} do %>
                 <%= image_tag "/images/maximize.png", width: 24 %>
                 <i>Full</i>
             <% end %>

@@ -2,12 +2,16 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="viewer"
 export default class extends Controller {
-  static targets = ["container", "toolbar", "infoSection", "commentsSection", "sidebarActor"]
+  static targets = ["container", "toolbar", "infoSection", "commentsSection", "toolbarComments", "toolbarList", "bodyItem", "comments", "pgUp", "pgDown"]
   static values = { active: String }
 
   connect() {
     addEventListener("scroll", this.watchActivePage);
     addEventListener("scroll", this.watchLoadPage);
+    document.documentElement.style.setProperty("--list-body-height",
+      window.innerHeight - document.getElementsByClassName("list-body")[0].getBoundingClientRect().top -
+     document.getElementsByClassName("toolbar")[0].getBoundingClientRect().height + "px"
+     );
   }
 
   // new page uploaded
@@ -15,6 +19,7 @@ export default class extends Controller {
     if(document.upper_page){
       document.upper_page.realize();
     }
+    this.updateNavigation()
   }
 
   // !Outer function
@@ -71,7 +76,31 @@ export default class extends Controller {
       this.updateDescription()
       this.updateLike()
       this.setNewLink()
+      this.updateActiveItem()
+      this.updateComments()
+      this.updateNavigation()
     }
+  }
+
+  updateNavigation(){
+    if(this.containerTargets[0].getAttribute("for"))
+    this.pgUpTarget.classList.add("toolbar-item-button--inactive");
+    this.pgUpTarget.removeAttribute("href");
+  }
+
+  updateActiveItem(){
+    // TODO: navigation
+    this.bodyItemTargets.forEach(element => {
+      if (element.getAttribute("data-for") == this.activeValue){
+        element.classList.add("body__item--selected")
+      }else{
+        element.classList.remove("body__item--selected")
+      }
+    })
+  }
+
+  updateComments(){
+    this.commentsTarget.src = "/episode/" + this.activeValue + "/comments"
   }
 
   updateLike() {
@@ -79,7 +108,7 @@ export default class extends Controller {
   }
 
   updateDescription() {
-    this.toolbarTarget.querySelector("#toolbar-item-description__item").textContent = this.containerTargets.find(item => item.getAttribute("for") == this.activeValue).querySelector(".title").textContent;
+    this.toolbarTarget.querySelector("#summary_episode_turbo_frame").src = "/episode/" + this.activeValue + "/summary"
   }
 
   setNewLink() {
@@ -92,30 +121,53 @@ export default class extends Controller {
       this.enterFullscreen();
     } else if (document.exitFullscreen) {
       this.exitFullScreen();
+      this.openInfo(new Event("none"));
     }
   }
 
   enterFullscreen() {
     document.documentElement.requestFullscreen();
+    this.closeSidebar()
   }
 
   exitFullScreen() {
     document.exitFullscreen();
   }
 
+  closeSidebar(){
+    this.setActiveButtonNone()
+    this.commentsSectionTarget.classList.add("sidebar-section--closed")
+    this.infoSectionTarget.classList.add("sidebar-section--closed")
+  }
+
   openInfo(event){
     event.preventDefault();
-    this.sidebarActorTargets.forEach((target)=> {target.classList.remove("toolbar-item-button--active")})
-    event.target.classList.add("toolbar-item-button--active")
+    this.exitFullScreen();
+    this.setActiveButtonList();
     this.infoSectionTarget.classList.remove("sidebar-section--closed")
     this.commentsSectionTarget.classList.add("sidebar-section--closed")
   }
 
   openComments(event){
     event.preventDefault();
-    this.sidebarActorTargets.forEach((target)=> {target.classList.remove("toolbar-item-button--active")})
-    event.target.classList.add("toolbar-item-button--active")
+    this.exitFullScreen();
+    this.setActiveButtonComments();
     this.commentsSectionTarget.classList.remove("sidebar-section--closed")
     this.infoSectionTarget.classList.add("sidebar-section--closed")
+  }
+
+  setActiveButtonComments(){
+    this.setActiveButtonNone();
+    this.toolbarCommentsTarget.classList.add("toolbar-item-button--active");
+  }
+
+  setActiveButtonList(){
+    this.setActiveButtonNone();
+    this.toolbarListTarget.classList.add("toolbar-item-button--active");
+  }
+
+  setActiveButtonNone(){
+    this.toolbarCommentsTarget.classList.remove("toolbar-item-button--active");
+    this.toolbarListTarget.classList.remove("toolbar-item-button--active");
   }
 }

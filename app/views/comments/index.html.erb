@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "episode_comments_turbo_frame" do %>
+    <div id="comments_container">
+        <%= render @comments %>
+    </div>
+    <%= tag.div class: "p-2 position-absolute w-100", id: "new_comment_form_container" do %>
+        <%= render partial: "form", locals: {comment: @new_comment, url: episode_comments_path(@new_comment.episode)} %>
+    <% end %>
+<% end %>

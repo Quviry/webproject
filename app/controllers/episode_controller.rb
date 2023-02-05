@@ -4,7 +4,7 @@ require "pagy/extras/countless"
 
 # Controller for episodes
 class EpisodeController < ApplicationController
-  before_action :set_episode_from_params, only: %w[show edit update destroy]
+  before_action :set_episode_from_params, only: %w[show edit update destroy summary]
   before_action :set_series
   before_action :set_episode, only: ["create"]
 
@@ -43,6 +43,8 @@ class EpisodeController < ApplicationController
       end
     end
   end
+
+  def summary; end
 
   def update
     @episode = Episode.find(params[:id])
