@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :collected_comments, through: :episodes, source: :comments
 
   has_many :subscriptions, dependent: :destroy
-  has_many :subscript_series, through: :subscriptions, source: :series # maybe fall
+  has_many :subscript_series, through: :subscriptions, source: :series
   has_many :subscript_episodes, through: :subscript_series, source: :episodes
 
   has_many :views, dependent: :nullify

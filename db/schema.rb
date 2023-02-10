@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_25_154918) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_07_155147) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -72,6 +72,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_154918) do
     t.integer "scene", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "likes_count", default: 0
+    t.integer "views_count", default: 0
+    t.integer "comments_count", default: 0
     t.index ["series_id"], name: "index_episodes_on_series_id"
     t.index ["title", "series_id"], name: "index_episodes_on_title_and_series_id", unique: true
   end

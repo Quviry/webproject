@@ -11,11 +11,11 @@
         <div class="container my-2">
             <%= link_to @series.type, @series.type == "Comics" ? comics_path : novels_path, class: "link-dark" %>
             <%= content_tag(:span, " ● ") %>
-            <%= content_tag(:span, @series.views.count.to_s + " views") %>
+            <%= content_tag(:span, @series.views.size.to_s + " views") %>
             <%= content_tag(:span, " ● ") %>
-            <%= content_tag(:span, @series.subscriptions.count.to_s + " subscribers") %>
+            <%= content_tag(:span, @series.subscriptions.size.to_s + " subscribers") %>
             <%= content_tag(:span, " ● ") %>
-            <%= content_tag(:span, @series.likes.count.to_s + " likes") %>
+            <%= content_tag(:span, @series.likes.size.to_s + " likes") %>
         </div>
         <div class="container d-flex">
             <% if !@current_user.nil? && @current_user.views.exists?(episode: @series.episodes) %>

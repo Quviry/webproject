@@ -2,8 +2,8 @@
 
 # Dashboard helper
 module DashboardHelper
-  def active_user_artist?
-    Series.exists?(user: instance_variable_get(:@current_user))
+  def user_artist?(user)
+    Series.exists?(user:)
   end
 
   def path_group
@@ -18,14 +18,14 @@ module DashboardHelper
   end
 
   def received_likes(user)
-    user.collected_likes.count
+    user.collected_likes.size
   end
 
   def received_views(user)
-    user.collected_views.count
+    user.collected_views.size
   end
 
   def received_comments(user)
-    user.collected_comments.count
+    user.collected_comments.size
   end
 end

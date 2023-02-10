@@ -7,17 +7,17 @@ module EpisodeHelper
   end
 
   def episode_views(episode)
-    count = episode.views.count
+    count = episode.views_count
     "#{number_to_human count} #{I18n.t('view', count:)}"
   end
 
   def episode_likes(episode)
-    count = episode.likes.count
+    count = episode.likes_count
     "#{number_to_human count} #{I18n.t('like', count:)}"
   end
 
   def episode_comments(episode)
-    count = episode.comments.count
+    count = episode.comments_count
     "#{number_to_human count} #{I18n.t('comment', count:)}"
   end
 end

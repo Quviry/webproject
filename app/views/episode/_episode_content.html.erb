@@ -5,8 +5,8 @@
         <p class="date"><%= episode.created_at.strftime("%F") %></p>
     </div>
     <% if episode.type == "ComicEpisode" %>
-        <% episode.pages.each do |page| %>
-            <%= image_tag rails_storage_proxy_path(page), class: "page", width: page.metadata["width"], height: page.metadata["height"] %>
+        <% episode.pages.with_all_variant_records.each do |page| %>
+            <%= image_tag page, class: "page", width: page.metadata["width"], height: page.metadata["height"] %>
             <% p page.metadata %>
         <% end %>
     <% elsif episode.type == "NovelEpisode" %>
@@ -25,11 +25,11 @@
         <%= tag.div class: "fishie-comment"  do %>
             <%= tag.div class: "comment-summary justify-items-between" do %>
                 <%= tag.div class: "comment-count" do %>
-                    Comments(<%= episode.comments.count %>)
+                    Comments(<%= episode.comments.size %>)
                 <% end %>
                 <%= link_to "See all", "#", class: "link-dark" %>
             <% end %>
-            <% if episode.comments.count > 0 %>
+            <% if episode.comments.size > 0 %>
                 <%= tag.div class: "top-comment"  do %>
                     Top comment
                 <% end %>

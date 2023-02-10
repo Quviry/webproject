@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   before_action :set_turbo_stream_format, only: %i[create update]
   def index
     @episode = Episode.find(params[:episode_id])
-    @comments = @episode.comments.where(comment_id: nil)
+    @comments = @episode.comments.where(comment_id: nil).eager_load(:user, :replies)
     @new_comment = Comment.new(episode: @episode, user: @current_user)
   end
 

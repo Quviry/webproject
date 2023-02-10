@@ -31,7 +31,7 @@ class SeriesController < ApplicationController
   end
 
   def info
-    @series = Series.where(url: params[:title]).first
+    @series = Series.eager_load(:genres).eager_load(:tags).where(url: params[:title]).first
   end
 
   def new

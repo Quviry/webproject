@@ -1,6 +1,6 @@
 <%= render "dashboard/sidebar" %>
 <div class="container col-8">
-    <% if active_user_artist? %>
+    <% if user_artist? @current_user %>
         <%= render "summary" %>
         <%= render "series/index", series: @series %>
     <% else %>

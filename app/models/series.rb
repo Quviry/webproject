@@ -11,9 +11,9 @@ class Series < ApplicationRecord
 
   has_many :episodes, dependent: :destroy
 
-  has_many :views, through: :episodes, counter_cache: true
-  has_many :likes, through: :episodes, counter_cache: true
-  has_many :comments, through: :episodes, counter_cache: true
+  has_many :views, through: :episodes
+  has_many :likes, through: :episodes
+  has_many :comments, through: :episodes
 
   has_many :subscriptions, dependent: :delete_all
   has_many :subscribed_user, through: :subscriptions, source: :series
@@ -58,5 +58,9 @@ class Series < ApplicationRecord
   before_validation do
     self.tags = (tags_list || []).map { |title| Tag.where(title:).first_or_create }
     self.genres = Genre.where(title: (genres_list || []))
+  end
+
+  def self.likes_order
+    left_joins(:episodes).group("COALESCE(episodes.series_id, series.id)").order("SUM(episodes.likes_count) DESC")
   end
 end

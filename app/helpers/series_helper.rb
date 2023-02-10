@@ -11,22 +11,22 @@ module SeriesHelper
   end
 
   def series_views(series)
-    count = series.views.count
+    count = series.views.size
     "#{number_to_human count} #{I18n.t('view', count:)}"
   end
 
   def series_likes(series)
-    count = series.likes.count
+    count = series.likes.size
     "#{number_to_human count} #{I18n.t('like', count:)}"
   end
 
   def series_comments(series)
-    count = series.comments.count
+    count = series.comments.size
     "#{number_to_human count} #{I18n.t('comment', count:)}"
   end
 
   def episodes_count(series)
-    count = series.episodes.count
+    count = series.episodes.size
     "#{count} #{I18n.t('episode', count:)}"
   end
 end

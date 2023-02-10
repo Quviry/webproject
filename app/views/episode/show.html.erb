@@ -27,7 +27,7 @@
                 <%= tag.div do %>
                     <%= tag.div episodes_count(@series), class: "list-header" %>
                     <%= tag.div class: "list-body" do %>
-                        <% @series.episodes.each do |episode| %>
+                        <% @series.episodes.with_attached_thumbnail.each do |episode| %>
                             <%= link_to episode_path(episode), class: "text-decoration-none" do %>
                                 <%= tag.div class: "body__item " + (episode == @episode ? "body__item--selected" : ""), data: {viewer_target: "bodyItem", for: episode.id} do %>
                                     <%= image_tag episode.thumbnail, height: 52, class: "item__thumb" %>

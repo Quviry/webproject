@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between">
-    <h2 class="mt-4">Series(<%= series.length %>)</h2>
+    <h2 class="mt-4">Series(<%= series.size %>)</h2>
     <div class="d-flex align-items-center">
         <select class="form-select" aria-label="Default select example">
             <option selected value="1">All</option>
@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<% series.each do |item|%>
+<% series.with_attached_cover.each do |item| %>
     <div class="card p-3 flex-row my-3">
         <%= link_to image_tag(item.cover.variant(:thumb), height: 135, width: 90), series_path(item.url) %>
         <div class="container-fluid">
@@ -36,7 +36,7 @@
                         <p>Episodes: </p>
                     </div>
                     <div class="col">
-                        <%= item.episodes.count %>
+                        <%= item.episodes.size %>
                     </div>
                     <div class="col">
                         <p>Type: </p>

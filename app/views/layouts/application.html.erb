@@ -74,9 +74,9 @@
                 <li class="d-flex"><%= link_to logout_path, class: "dropdown-item" do %><%= image_tag "/images/stand-by.png", height: 24 %>   Logout <%end%></li>
               </ul>
             </div>
-            <%= link_to active_user_artist? ? "Dashboard" : "Publish", dashboard_path, class: "btn btn-outline-dark mx-2 " %>
+            <%= link_to user_artist?(@current_user) ? "Dashboard" : "Publish", dashboard_path, class: "btn btn-outline-dark mx-2 " %>
           <% else %>
-              <button type="button" class="btn btn-outline-dark me-2" data-bs-toggle="modal"
+              <button type="button" class="btn btn-outline-dark me-2" data-bs-toggle="modal" id="header_signup_btn"
                 data-bs-target="#exampleModal">Sign up</button>
           <% end %>
         </div>

@@ -90,7 +90,7 @@ class EpisodeController < ApplicationController
   end
 
   def set_episode_from_params
-    @episode = Episode.find(params[:id])
+    @episode = Episode.eager_load(:series).find(params[:id])
   end
 
   def update_params

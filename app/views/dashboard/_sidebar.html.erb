@@ -7,7 +7,7 @@
                 <p><small>Dashboard</small></p>
             </a>
         </li>
-        <% if active_user_artist? %>
+        <% if user_artist?(@current_user) %>
         <li class="p-3 ">
             <a href="<%= dashboard_episodes_path %>" class="nav-link  link-light <%= "active" if path_group == 2 %> py-3" title="" data-bs-toggle="tooltip" data-bs-placement="right"
                 data-bs-original-title="Episodes">

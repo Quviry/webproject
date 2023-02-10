@@ -78,8 +78,6 @@ RSpec.describe Series, type: :model do
       end
     end
     target.attach(io: File.open("./tmp/#{name}.#{format}", "rb"), filename: "#{name}.#{format}")
-    # target.save
-    # File.delete("./tmp/#{name}.#{format}")
   end
 
   describe "Delete" do

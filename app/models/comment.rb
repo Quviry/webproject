@@ -3,7 +3,10 @@
 # Page comment under episode (to comment)
 class Comment < ApplicationRecord
   belongs_to :user
-  belongs_to :episode
+  belongs_to :episode, counter_cache: true
+
+  delegate :series, to: :episode
+  belongs_to :series, counter_cache: true
 
   has_many :replies, class_name: "Comment", dependent: :destroy
   belongs_to :topic_starter, class_name: "Comment", optional: true
