@@ -7,7 +7,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   # driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
 
   Capybara.register_driver :headless_chrome do |app|
-    options = Selenium::WebDriver::Chrome::Options.new
+    options = Selenium::WebDriver::Chrome::Options.new(args: %w[window-size=1400,1000 no-sandbox test-type])
     options.add_argument("--headless")
 
     Capybara::Selenium::Driver.new(
@@ -27,5 +27,5 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     )
   end
 
-  Capybara.default_driver = :chrome
+  Capybara.default_driver = :headless_chrome
 end
