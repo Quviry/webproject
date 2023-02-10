@@ -18,7 +18,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   Capybara.register_driver :chrome do |app|
-    options = Selenium::WebDriver::Chrome::Options.new(args: %w[window-size=1400,1000])
+    options = Selenium::WebDriver::Chrome::Options.new(args: %w[window-size=1400,1000 no-sandbox test-type])
 
     Capybara::Selenium::Driver.new(
       app,
